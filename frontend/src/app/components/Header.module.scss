@@ -1,0 +1,19 @@
+@import "../variables.module.scss";
+
+.header {
+  .img {
+    width: 100%;
+    position: relative;
+  }
+
+  .title {
+    font-family: "Yellowtail";
+    font-size: 3.5rem;
+    color: $primary;
+
+    position: absolute;
+    top: 5%;
+    left: 3%;
+    white-space: nowrap;
+  }
+}
