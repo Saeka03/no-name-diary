@@ -44,6 +44,7 @@
     background-color: transparent !important;
     position: relative;
     color: white;
+    transition: after 3s ease;
 
     &::before {
       content: "";
@@ -53,6 +54,46 @@
       border-radius: 50%;
       right: 0;
       background-color: $primary;
+    }
+  }
+
+  :global(.fc-daygrid-day-frame.fc-scrollgrid-sync-inner) {
+    position: relative;
+
+    &::before {
+      content: "+";
+      position: absolute;
+      width: 2rem;
+      height: 2rem;
+      padding: 0rem;
+      margin: 0rem;
+      margin: 0.1rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: $primary;
+      border-radius: 50%;
+      border: 1px solid $primary;
+      box-shadow: 0 1.5px 1.5px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+
+    &:active::before {
+      position: absolute;
+      top: 0.1rem;
+      left: 0.1rem;
+      box-shadow: none;
     }
   }
 }
