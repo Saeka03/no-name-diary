@@ -4,8 +4,8 @@ import styles from "./Header.module.scss";
 import { Yellowtail } from "next/font/google";
 
 const yellowtail = Yellowtail({
-  subsets: ["latin"], 
-  weight: "400", 
+  subsets: ["latin"],
+  weight: "400",
 });
 
 function Header() {
@@ -15,7 +15,7 @@ function Header() {
         className={styles.img}
         src={"/img-header.png"}
         alt="Header image"
-        height={150}
+        height={100}
         width={2500}
       />
       <h1 className={`${styles.title} ${yellowtail.className}`}>
