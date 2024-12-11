@@ -39,4 +39,20 @@
       color: $gray-text;
     }
   }
+
+  :global(.fc-day-today) {
+    background-color: transparent !important;
+    position: relative;
+    color: white;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      right: 0;
+      background-color: $primary;
+    }
+  }
 }
