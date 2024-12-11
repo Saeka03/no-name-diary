@@ -1,12 +1,13 @@
 import React from "react";
 import styles from "./page.module.scss";
 import Header from "./components/Header";
+import Calendar from "./components/Calendar";
 
 function Page() {
   return (
-    <div>
+    <div className={styles.page}>
       <Header />
-      <div className={styles.title}>no name diary</div>
+      <Calendar />
     </div>
   );
 }

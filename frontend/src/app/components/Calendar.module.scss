@@ -1,0 +1,42 @@
+@import "../variables.module.scss";
+
+.calendar {
+  width: 80%;
+  margin: 0;
+  padding: 1rem 2rem;
+  background-color: white;
+  color: $gray-text;
+  font-family: "Poppins", sans-serif;
+
+  :global(.fc-button),
+  :global(.fc-today-button.fc-button.fc-button-primary) {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: $gray-text;
+    font-size: 1.25rem;
+    padding: 0;
+    margin: 0;
+    transition: color 0.3s ease;
+    font-family: inherit !important;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    &:hover {
+      color: $gray-text-hover;
+    }
+
+    &:active {
+      color: $gray-text !important;
+    }
+
+    &:disabled {
+      color: $gray-text;
+    }
+  }
+}
