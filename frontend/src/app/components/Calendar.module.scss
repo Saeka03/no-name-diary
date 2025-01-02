@@ -7,6 +7,7 @@
   background-color: white;
   color: $gray-text;
   font-family: "Poppins", sans-serif;
+  position: relative;
 
   :global(.fc-button),
   :global(.fc-today-button.fc-button.fc-button-primary) {
@@ -49,9 +50,10 @@
     &::before {
       content: "";
       position: absolute;
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 1.25rem;
+      height: 1.25rem;
       border-radius: 50%;
+      top: 3px;
       right: 0;
       background-color: $primary;
     }
@@ -60,40 +62,51 @@
   :global(.fc-daygrid-day-frame.fc-scrollgrid-sync-inner) {
     position: relative;
 
-    &::before {
-      content: "+";
+    .plus {
       position: absolute;
-      width: 2rem;
-      height: 2rem;
-      padding: 0rem;
-      margin: 0rem;
-      margin: 0.1rem;
-
+      width: 1.6rem;
+      height: 1.6rem;
       display: flex;
       align-items: center;
       justify-content: center;
+      top: 0;
+      left: 0;
+      margin: 0.1rem;
 
       font-weight: 900;
       font-size: 1.2rem;
       color: $primary;
       border-radius: 50%;
       border: 1px solid $primary;
-      box-shadow: 0 1.5px 1.5px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
+      box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
       opacity: 0;
+
+      cursor: pointer;
       transition: opacity 0.2s ease;
-      box-sizing: border-box;
+
+      &:active {
+        position: absolute;
+        top: 0.1rem;
+        left: 0.1rem;
+        box-shadow: none;
+      }
     }
 
-    &:hover::before {
+    &:hover .plus {
       opacity: 1;
     }
-
-    &:active::before {
-      position: absolute;
-      top: 0.1rem;
-      left: 0.1rem;
-      box-shadow: none;
-    }
   }
+
+  // .modal {
+  //   position: absolute;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -50%);
+  //   width: 60%;
+  //   height: 90%;
+  //   background-color: $blue-background;
+  //   z-index: 1;
+  //   border-radius: 10px;
+  //   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  // }
 }
