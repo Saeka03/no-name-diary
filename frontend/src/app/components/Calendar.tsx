@@ -38,7 +38,9 @@ function Calendar() {
           { title: "Event 2", date: "2025-01-25" },
         ]}
       />
-      <div className={styles.modal}>{/* <Modal /> */}</div>
+      <div className={styles.modal}>
+        <Modal />
+      </div>
     </div>
   );
 }
