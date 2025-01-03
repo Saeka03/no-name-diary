@@ -6,9 +6,11 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styles from "./Calendar.module.scss";
-import Modal from "./Modal";
+import { useModalContext } from "../contexts/ModalContexts";
 
 function Calendar() {
+  const { openModalHandler } = useModalContext();
+
   return (
     <div className={styles.calendar}>
       <FullCalendar
@@ -27,6 +29,11 @@ function Calendar() {
           plusButton.className = styles.plus;
           plusButton.textContent = "+";
 
+          // Add click event listener to the button
+          plusButton.addEventListener("click", () => {
+            openModalHandler(info.date);
+          });
+
           // Append it to the day cell
           const dayGridFrame = info.el.querySelector(".fc-daygrid-day-frame");
           if (dayGridFrame) {
@@ -38,9 +45,6 @@ function Calendar() {
           { title: "Event 2", date: "2025-01-25" },
         ]}
       />
-      <div className={styles.modal}>
-        <Modal />
-      </div>
     </div>
   );
 }
