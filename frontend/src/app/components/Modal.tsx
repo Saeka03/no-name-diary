@@ -8,6 +8,7 @@ import { FaRegFaceSadCry } from "react-icons/fa6";
 import { IoTrashOutline } from "react-icons/io5";
 import { useModalContext } from "../contexts/ModalContexts";
 import { formatDate } from "../utils/dateUtils";
+import Button from "./Button";
 
 function Modal() {
   const { isModalOpen, selectedDate, closeModalHandler } = useModalContext();
@@ -25,7 +26,11 @@ function Modal() {
           <div className={styles.header}>
             <p>{formattedDate}</p>
             <div>
-              <button className={styles.seeTranslate}>See translation</button>
+              <Button
+                text={"See translation"}
+                className={"cancel"}
+                disabled={true}
+              />
               <button onClick={closeModalHandler}>×</button>
             </div>
           </div>
@@ -50,8 +55,8 @@ function Modal() {
             </button>
           </div>
           <div className={styles.edit}>
-            <button>Delete</button>
-            <button>Save</button>
+            <Button text={"Delete"} className={"delete"} disabled={true} />
+            <Button text={"Save"} className={"action"} disabled={true} />
           </div>
           <div className={styles.line}></div>
           <div className={styles.comments}>
@@ -73,7 +78,7 @@ function Modal() {
                 id=""
                 placeholder="Leave Your comments..."
               ></textarea>
-              <button>Submit</button>
+              <Button text={"Submit"} className={"action"} disabled={true} />
             </div>
           </div>
         </div>

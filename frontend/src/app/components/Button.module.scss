@@ -1,0 +1,35 @@
+@import "../variables.module.scss";
+
+.button {
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid $primary;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+  transition: transform 0.1s, box-shadow 0.1s;
+
+  &:active {
+    transform: translate(0.1rem, 0.1rem);
+    box-shadow: none;
+  }
+}
+
+.action {
+  background-color: $primary;
+  color: white;
+}
+
+.cancel {
+  background-color: white;
+  color: $primary;
+}
+
+.delete {
+  background-color: $delete;
+  color: white;
+  border: none;
+}
