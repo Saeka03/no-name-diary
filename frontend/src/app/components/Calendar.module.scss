@@ -83,11 +83,10 @@
 
       cursor: pointer;
       transition: opacity 0.2s ease;
+      transition: transform 0.1s, box-shadow 0.1s;
 
       &:active {
-        position: absolute;
-        top: 0.1rem;
-        left: 0.1rem;
+        transform: translate(0.1rem, 0.1rem);
         box-shadow: none;
       }
     }

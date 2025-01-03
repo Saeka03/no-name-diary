@@ -21,7 +21,7 @@
 
     .modal {
       margin: 1rem;
-      padding: 1rem;
+      padding: 0.5rem;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -30,6 +30,20 @@
       .header {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+
+        .buttons {
+          display: flex;
+          gap: 1rem;
+
+          .closeButton {
+            color: $primary;
+            border: none;
+            background-color: transparent;
+            font-size: 2rem;
+            cursor: pointer;
+          }
+        }
       }
 
       .line {
@@ -38,10 +52,42 @@
         margin: 1rem 0;
       }
 
+      .contents {
+        margin-bottom: 0.5rem;
+      }
+
       .reactions,
       .edit {
         display: flex;
+        gap: 1rem;
         justify-content: flex-end;
+
+        .reactionItems {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 1.25rem;
+          margin-bottom: 0.5rem;
+
+          .reaction {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+
+            svg {
+              font-size: 1.75rem;
+            }
+
+            &:hover {
+              transform: scale(1.1);
+              transition: transform 0.3s ease-in-out;
+            }
+
+            &:active {
+              transform: translate(0.1rem, 0.1rem);
+            }
+          }
+        }
       }
 
       .commentsHeader {
@@ -53,13 +99,27 @@
       .commentsContents {
         display: flex;
         justify-content: space-between;
+
+        .bin {
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+
+          svg {
+            font-size: 1.25rem;
+          }
+
+          &:active {
+            transform: translate(0.1rem, 0.1rem);
+          }
+        }
       }
 
       .leaveCommentsWrapper {
         display: grid;
         align-items: end;
         height: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
 
         .leaveComments {
           display: flex;
@@ -68,13 +128,15 @@
           width: 100%;
 
           textarea {
+            padding: 0.25rem;
             height: 4rem;
           }
-        }
-      }
 
-      &::backdrop {
-        background-color: red;
+          .submit {
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
       }
     }
   }

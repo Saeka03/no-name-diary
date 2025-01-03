@@ -8,6 +8,7 @@ import { FaRegFaceSadCry } from "react-icons/fa6";
 import { IoTrashOutline } from "react-icons/io5";
 import { useModalContext } from "../contexts/ModalContexts";
 import { formatDate } from "../utils/dateUtils";
+import Button from "./Button";
 
 function Modal() {
   const { isModalOpen, selectedDate, closeModalHandler } = useModalContext();
@@ -24,34 +25,52 @@ function Modal() {
         <div className={styles.modal}>
           <div className={styles.header}>
             <p>{formattedDate}</p>
-            <div>
-              <button className={styles.seeTranslate}>See translation</button>
-              <button onClick={closeModalHandler}>×</button>
+            <div className={styles.buttons}>
+              <Button
+                text={"See translation"}
+                className={"cancel"}
+                disabled={true}
+              />
+              <button
+                className={styles.closeButton}
+                onClick={closeModalHandler}
+              >
+                ×
+              </button>
             </div>
           </div>
           <div className={styles.line}></div>
           <h1>Roboto</h1>
           <div className={styles.line}></div>
-          <div>
+          <div className={styles.contents}>
             Roboto is an incredibly popular font choice for web designers, so
             it’s no surprise that basic, sans serif Roboto as well as the
             Condensed and Slab variations have been frontrunners for Webflow
             users for the past few years. 
           </div>
           <div className={styles.reactions}>
-            <button>
-              <AiOutlineLike />
-            </button>
-            <button>
-              <FaRegFaceLaughSquint />
-            </button>
-            <button>
-              <FaRegFaceSadCry />
-            </button>
+            <div className={styles.reactionItems}>
+              <button className={styles.reaction}>
+                <AiOutlineLike />
+              </button>
+              <p>2</p>
+            </div>
+            <div className={styles.reactionItems}>
+              <button className={styles.reaction}>
+                <FaRegFaceLaughSquint />
+              </button>
+              <p>3</p>
+            </div>
+            <div className={styles.reactionItems}>
+              <button className={styles.reaction}>
+                <FaRegFaceSadCry />
+              </button>
+              <p>1</p>
+            </div>
           </div>
           <div className={styles.edit}>
-            <button>Delete</button>
-            <button>Save</button>
+            <Button text={"Delete"} className={"delete"} disabled={true} />
+            <Button text={"Save"} className={"action"} disabled={true} />
           </div>
           <div className={styles.line}></div>
           <div className={styles.comments}>
@@ -61,7 +80,7 @@ function Modal() {
             </div>
             <div className={styles.commentsContents}>
               <p>You're right</p>
-              <button>
+              <button className={styles.bin}>
                 <IoTrashOutline />
               </button>
             </div>
@@ -73,7 +92,9 @@ function Modal() {
                 id=""
                 placeholder="Leave Your comments..."
               ></textarea>
-              <button>Submit</button>
+              <div className={styles.submit}>
+                <Button text={"Submit"} className={"action"} disabled={true} />
+              </div>
             </div>
           </div>
         </div>
