@@ -95,4 +95,25 @@
       opacity: 1;
     }
   }
+
+  :global(.fc-event) {
+    padding: 0.1rem 0.05rem;
+    background-color: $purple-background;
+    border: 1px solid $primary;
+    border-radius: 4px;
+    box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+
+    &:active {
+      transform: translate(0.1rem, 0.1rem);
+      box-shadow: none;
+    }
+  }
+
+  :global(.fc-event-title) {
+    color: $primary;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-overflow: ellipsis;
+  }
 }
