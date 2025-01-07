@@ -1,15 +1,42 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styles from "./Calendar.module.scss";
 import { useModalContext } from "../contexts/ModalContexts";
+import { getDiaries } from "../api/diaryApi";
+import { formatISODate } from "../utils/dateUtils";
+
+type EventType = {
+  title: string;
+  date: string;
+};
 
 function Calendar() {
   const { openModalHandler } = useModalContext();
+  const [diaries, setDiaries] = useState<DiaryType[]>([]);
+  const [events, setEvents] = useState<EventType[]>([]);
+
+  useEffect(() => {
+    const fetchDiary = async () => {
+      try {
+        const data = await getDiaries();
+        setDiaries(data.diaries);
+
+        const newEvents = data.diaries.map((diary) => ({
+          title: diary.title,
+          date: formatISODate(diary.dateTime),
+        }));
+        setEvents((prevEvents) => [...prevEvents, ...newEvents]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchDiary();
+  }, []);
 
   return (
     <div className={styles.calendar}>
@@ -18,7 +45,7 @@ function Calendar() {
         initialView="dayGridMonth"
         editable={false}
         selectable={false}
-        dayMaxEvents={1}
+        dayMaxEvents={3}
         headerToolbar={{
           start: "title",
           end: "prev  today next",
@@ -40,10 +67,7 @@ function Calendar() {
             dayGridFrame.appendChild(plusButton);
           }
         }}
-        events={[
-          { title: "Event 1", date: "2025-01-31" },
-          { title: "Event 2", date: "2025-01-25" },
-        ]}
+        events={events}
       />
     </div>
   );
