@@ -15,3 +15,8 @@ export const formatTime = (date: Date) => {
     hour12: false,
   }).format(date);
 };
+
+// Format date (e.g., 2025-01-01)
+export const formatISODate = (date: Date) => {
+  return date.toString().split("T")[0];
+};
