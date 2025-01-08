@@ -42,7 +42,7 @@ function Calendar() {
   const clickEventHandler = (info) => {
     const eventId = info.event.id;
     const diaryState = diaries.find((diary) => diary.id == eventId);
-    openModalHandler(new Date(), diaryState);
+    openModalHandler(diaryState);
   };
 
   return (
@@ -65,7 +65,7 @@ function Calendar() {
 
           // Add click event listener to the button
           plusButton.addEventListener("click", () => {
-            // openModalHandler(info.date);
+            openModalHandler(info.date);
           });
 
           // Append it to the day cell
