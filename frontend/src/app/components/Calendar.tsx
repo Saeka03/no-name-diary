@@ -27,6 +27,7 @@ function Calendar() {
         setDiaries(data.diaries);
 
         const newEvents = data.diaries.map((diary) => ({
+          id: diary.id,
           title: diary.title,
           date: formatISODate(diary.dateTime),
         }));
@@ -37,6 +38,12 @@ function Calendar() {
     };
     fetchDiary();
   }, []);
+
+  const clickEventHandler = (info) => {
+    const eventId = info.event.id;
+    const diaryState = diaries.find((diary) => diary.id == eventId);
+    openModalHandler(new Date(), diaryState);
+  };
 
   return (
     <div className={styles.calendar}>
@@ -58,7 +65,7 @@ function Calendar() {
 
           // Add click event listener to the button
           plusButton.addEventListener("click", () => {
-            openModalHandler(info.date);
+            // openModalHandler(info.date);
           });
 
           // Append it to the day cell
@@ -68,6 +75,7 @@ function Calendar() {
           }
         }}
         events={events}
+        eventClick={(info) => clickEventHandler(info)}
       />
     </div>
   );

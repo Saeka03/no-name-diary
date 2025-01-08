@@ -3,7 +3,9 @@ import { Request, Response } from "express";
 
 export const getDiary = async (_: Request, res: Response): Promise<void> => {
   try {
-    const diaries = await prisma.diary.findMany();
+    const diaries = await prisma.diary.findMany({
+      include: { comment: true },
+    });
     res.status(200).json({ diaries });
   } catch (error) {
     res.status(500).json({ error: `${error}` });

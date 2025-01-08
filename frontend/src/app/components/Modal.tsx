@@ -7,14 +7,16 @@ import { FaRegFaceLaughSquint } from "react-icons/fa6";
 import { FaRegFaceSadCry } from "react-icons/fa6";
 import { IoTrashOutline } from "react-icons/io5";
 import { useModalContext } from "../contexts/ModalContexts";
-import { formatDate } from "../utils/dateUtils";
+import { formatDate, formatTime } from "../utils/dateUtils";
 import Button from "./Button";
 
 function Modal() {
-  const { isModalOpen, selectedDate, closeModalHandler } = useModalContext();
-  const formattedDate = formatDate(selectedDate);
+  const { isModalOpen, selectedDate, diaryState, closeModalHandler } =
+    useModalContext();
 
-  if (!isModalOpen) return null;
+  if (!isModalOpen || !diaryState) return null;
+
+  const diaryDate = formatDate(new Date(diaryState.dateTime));
 
   return (
     <div className={styles.modalWrapper} onClick={closeModalHandler}>
@@ -24,7 +26,7 @@ function Modal() {
       >
         <div className={styles.modal}>
           <div className={styles.header}>
-            <p>{formattedDate}</p>
+            <p>{diaryDate}</p>
             <div className={styles.buttons}>
               <Button
                 text={"See translation"}
@@ -40,32 +42,27 @@ function Modal() {
             </div>
           </div>
           <div className={styles.line}></div>
-          <h1>Roboto</h1>
+          <h1>{diaryState.title}</h1>
           <div className={styles.line}></div>
-          <div className={styles.contents}>
-            Roboto is an incredibly popular font choice for web designers, so
-            it’s no surprise that basic, sans serif Roboto as well as the
-            Condensed and Slab variations have been frontrunners for Webflow
-            users for the past few years. 
-          </div>
+          <div className={styles.contents}>{diaryState.content}</div>
           <div className={styles.reactions}>
             <div className={styles.reactionItems}>
               <button className={styles.reaction}>
                 <AiOutlineLike />
               </button>
-              <p>2</p>
+              <p>{diaryState.like}</p>
             </div>
             <div className={styles.reactionItems}>
               <button className={styles.reaction}>
                 <FaRegFaceLaughSquint />
               </button>
-              <p>3</p>
+              <p>{diaryState.laugh}</p>
             </div>
             <div className={styles.reactionItems}>
               <button className={styles.reaction}>
                 <FaRegFaceSadCry />
               </button>
-              <p>1</p>
+              <p>{diaryState.cry}</p>
             </div>
           </div>
           <div className={styles.edit}>
@@ -73,18 +70,26 @@ function Modal() {
             <Button text={"Save"} className={"action"} disabled={true} />
           </div>
           <div className={styles.line}></div>
-          <div className={styles.comments}>
-            <div className={styles.commentsHeader}>
-              <h4>No Name</h4>
-              <p>Jan 04, 2025 15:00</p>
-            </div>
-            <div className={styles.commentsContents}>
-              <p>You're right</p>
-              <button className={styles.bin}>
-                <IoTrashOutline />
-              </button>
-            </div>
-          </div>
+          {diaryState.comment.map((comment) => {
+            const commentDateTime =
+              formatDate(new Date(comment.dateTime)) +
+              " " +
+              formatTime(new Date(comment.dateTime));
+            return (
+              <div className={styles.comments} key={comment.id}>
+                <div className={styles.commentsHeader}>
+                  <h4>No Name</h4>
+                  <p>{commentDateTime}</p>
+                </div>
+                <div className={styles.commentsContents}>
+                  <p>{comment.content}</p>
+                  <button className={styles.bin}>
+                    <IoTrashOutline />
+                  </button>
+                </div>
+              </div>
+            );
+          })}
           <div className={styles.leaveCommentsWrapper}>
             <div className={styles.leaveComments}>
               <textarea
