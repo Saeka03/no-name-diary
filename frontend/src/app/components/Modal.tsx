@@ -5,11 +5,12 @@ import styles from "./Modal.module.scss";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegFaceLaughSquint } from "react-icons/fa6";
 import { FaRegFaceSadCry } from "react-icons/fa6";
-import { IoTrashOutline } from "react-icons/io5";
 import { useModalContext } from "../contexts/ModalContexts";
-import { formatDate, formatTime } from "../utils/dateUtils";
+import { formatDate } from "../utils/dateUtils";
 import Button from "./Button";
 import DiaryInput from "./DiaryInput";
+import CommentInput from "./CommentInput";
+import CommentDisplay from "./CommentDisplay";
 
 function Modal() {
   const { isModalOpen, selectedDate, diaryState, closeModalHandler } =
@@ -91,49 +92,10 @@ function Modal() {
             <></>
           )}
           {diaryState &&
-            diaryState.comment.map((comment) => {
-              const commentDateTime =
-                formatDate(new Date(comment.dateTime)) +
-                " " +
-                formatTime(new Date(comment.dateTime));
-              return (
-                <>
-                  <div className={styles.line}></div>
-                  <div className={styles.comments} key={comment.id}>
-                    <div className={styles.commentsHeader}>
-                      <h4>No Name</h4>
-                      <p>{commentDateTime}</p>
-                    </div>
-                    <div className={styles.commentsContents}>
-                      <p>{comment.content}</p>
-                      <button className={styles.bin}>
-                        <IoTrashOutline />
-                      </button>
-                    </div>
-                  </div>
-                </>
-              );
-            })}
-          {diaryState ? (
-            <div className={styles.leaveCommentsWrapper}>
-              <div className={styles.leaveComments}>
-                <textarea
-                  name="comments"
-                  id=""
-                  placeholder="Leave Your comments..."
-                ></textarea>
-                <div className={styles.submit}>
-                  <Button
-                    text={"Submit"}
-                    className={"action"}
-                    disabled={true}
-                  />
-                </div>
-              </div>
-            </div>
-          ) : (
-            <></>
-          )}
+            diaryState.comment.map((comment) => (
+              <CommentDisplay key={comment.id} comment={comment} />
+            ))}
+          {diaryState ? <CommentInput /> : <></>}
         </div>
       </div>
     </div>
