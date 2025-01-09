@@ -6,7 +6,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styles from "./Calendar.module.scss";
-import { useModalContext } from "../contexts/ModalContexts";
+import { useModalContext } from "../contexts/ModalContext";
 import { getDiaries } from "../api/diaryApi";
 import { formatISODate } from "../utils/dateUtils";
 

@@ -5,7 +5,7 @@ import styles from "./Modal.module.scss";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegFaceLaughSquint } from "react-icons/fa6";
 import { FaRegFaceSadCry } from "react-icons/fa6";
-import { useModalContext } from "../contexts/ModalContexts";
+import { useModalContext } from "../contexts/ModalContext";
 import { formatDate } from "../utils/dateUtils";
 import Button from "./Button";
 import DiaryInput from "./DiaryInput";
