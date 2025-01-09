@@ -1,0 +1,32 @@
+@import "../variables.module.scss";
+
+.line {
+  width: 100%;
+  border-bottom: 1px solid $gray-text;
+  margin: 1rem 0;
+}
+
+.commentsHeader {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.commentsContents {
+  display: flex;
+  justify-content: space-between;
+
+  .bin {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    svg {
+      font-size: 1.25rem;
+    }
+
+    &:active {
+      transform: translate(0.1rem, 0.1rem);
+    }
+  }
+}

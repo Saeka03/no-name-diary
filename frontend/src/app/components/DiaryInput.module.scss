@@ -1,0 +1,30 @@
+@import "../variables.module.scss";
+
+.line {
+  width: 100%;
+  border-bottom: 1px solid $gray-text;
+  margin: 1rem 0;
+}
+
+.title {
+  padding: 0.25rem;
+  background-color: transparent;
+  font-size: 2rem;
+  font-weight: bold;
+  border: none;
+}
+
+.inputContents {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  height: 8rem;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+}
+
+.edit {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}

@@ -53,23 +53,6 @@
         margin: 1rem 0;
       }
 
-      .title {
-        padding: 0.25rem;
-        background-color: transparent;
-        font-size: 2rem;
-        font-weight: bold;
-        border: none;
-      }
-
-      .inputContents {
-        margin-bottom: 1rem;
-        padding: 0.5rem;
-        height: 8rem;
-        font-size: 1rem;
-        background-color: transparent;
-        border: none;
-      }
-
       .contents {
         margin-bottom: 0.5rem;
       }
@@ -104,55 +87,6 @@
             &:active {
               transform: translate(0.1rem, 0.1rem);
             }
-          }
-        }
-      }
-
-      .commentsHeader {
-        display: flex;
-        gap: 2rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .commentsContents {
-        display: flex;
-        justify-content: space-between;
-
-        .bin {
-          border: none;
-          background-color: transparent;
-          cursor: pointer;
-
-          svg {
-            font-size: 1.25rem;
-          }
-
-          &:active {
-            transform: translate(0.1rem, 0.1rem);
-          }
-        }
-      }
-
-      .leaveCommentsWrapper {
-        display: grid;
-        align-items: end;
-        height: 100%;
-        margin-bottom: 2rem;
-
-        .leaveComments {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          width: 100%;
-
-          textarea {
-            padding: 0.25rem;
-            height: 4rem;
-          }
-
-          .submit {
-            display: flex;
-            justify-content: flex-end;
           }
         }
       }

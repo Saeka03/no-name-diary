@@ -5,10 +5,12 @@ import styles from "./Modal.module.scss";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegFaceLaughSquint } from "react-icons/fa6";
 import { FaRegFaceSadCry } from "react-icons/fa6";
-import { IoTrashOutline } from "react-icons/io5";
 import { useModalContext } from "../contexts/ModalContexts";
-import { formatDate, formatTime } from "../utils/dateUtils";
+import { formatDate } from "../utils/dateUtils";
 import Button from "./Button";
+import DiaryInput from "./DiaryInput";
+import CommentInput from "./CommentInput";
+import CommentDisplay from "./CommentDisplay";
 
 function Modal() {
   const { isModalOpen, selectedDate, diaryState, closeModalHandler } =
@@ -49,22 +51,13 @@ function Modal() {
           </div>
           <div className={styles.line}></div>
           {diaryState ? (
-            <h1>{diaryState.title}</h1>
+            <>
+              <h1>{diaryState.title}</h1>
+              <div className={styles.line}></div>
+              <div className={styles.contents}>{diaryState.content}</div>
+            </>
           ) : (
-            <input
-              className={styles.title}
-              type="text"
-              placeholder="Title"
-            ></input>
-          )}
-          <div className={styles.line}></div>
-          {diaryState ? (
-            <div className={styles.contents}>{diaryState.content}</div>
-          ) : (
-            <textarea
-              className={styles.inputContents}
-              placeholder="Write your diary..."
-            ></textarea>
+            <DiaryInput />
           )}
           {diaryState ? (
             <div className={styles.reactions}>
@@ -90,59 +83,19 @@ function Modal() {
           ) : (
             <></>
           )}
-          <div className={styles.edit}>
-            {diaryState ? (
-              <Button text={"Delete"} className={"delete"} disabled={true} />
-            ) : (
-              <Button text={"Cancel"} className={"cancel"} disabled={true} />
-            )}
-            <Button text={"Save"} className={"action"} disabled={true} />
-          </div>
-          {diaryState &&
-            diaryState.comment.map((comment) => {
-              const commentDateTime =
-                formatDate(new Date(comment.dateTime)) +
-                " " +
-                formatTime(new Date(comment.dateTime));
-              return (
-                <>
-                  <div className={styles.line}></div>
-                  <div className={styles.comments} key={comment.id}>
-                    <div className={styles.commentsHeader}>
-                      <h4>No Name</h4>
-                      <p>{commentDateTime}</p>
-                    </div>
-                    <div className={styles.commentsContents}>
-                      <p>{comment.content}</p>
-                      <button className={styles.bin}>
-                        <IoTrashOutline />
-                      </button>
-                    </div>
-                    <div className={styles.line}></div>
-                  </div>
-                </>
-              );
-            })}
           {diaryState ? (
-            <div className={styles.leaveCommentsWrapper}>
-              <div className={styles.leaveComments}>
-                <textarea
-                  name="comments"
-                  id=""
-                  placeholder="Leave Your comments..."
-                ></textarea>
-                <div className={styles.submit}>
-                  <Button
-                    text={"Submit"}
-                    className={"action"}
-                    disabled={true}
-                  />
-                </div>
-              </div>
+            <div className={styles.edit}>
+              <Button text={"Delete"} className={"delete"} />
+              <Button text={"Save"} className={"action"} />
             </div>
           ) : (
             <></>
           )}
+          {diaryState &&
+            diaryState.comment.map((comment) => (
+              <CommentDisplay key={comment.id} comment={comment} />
+            ))}
+          {diaryState ? <CommentInput /> : <></>}
         </div>
       </div>
     </div>
