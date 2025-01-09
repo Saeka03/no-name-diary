@@ -9,6 +9,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import { useModalContext } from "../contexts/ModalContexts";
 import { formatDate, formatTime } from "../utils/dateUtils";
 import Button from "./Button";
+import DiaryInput from "./DiaryInput";
 
 function Modal() {
   const { isModalOpen, selectedDate, diaryState, closeModalHandler } =
@@ -49,22 +50,13 @@ function Modal() {
           </div>
           <div className={styles.line}></div>
           {diaryState ? (
-            <h1>{diaryState.title}</h1>
+            <>
+              <h1>{diaryState.title}</h1>
+              <div className={styles.line}></div>
+              <div className={styles.contents}>{diaryState.content}</div>
+            </>
           ) : (
-            <input
-              className={styles.title}
-              type="text"
-              placeholder="Title"
-            ></input>
-          )}
-          <div className={styles.line}></div>
-          {diaryState ? (
-            <div className={styles.contents}>{diaryState.content}</div>
-          ) : (
-            <textarea
-              className={styles.inputContents}
-              placeholder="Write your diary..."
-            ></textarea>
+            <DiaryInput />
           )}
           {diaryState ? (
             <div className={styles.reactions}>
@@ -90,14 +82,14 @@ function Modal() {
           ) : (
             <></>
           )}
-          <div className={styles.edit}>
-            {diaryState ? (
-              <Button text={"Delete"} className={"delete"} disabled={true} />
-            ) : (
-              <Button text={"Cancel"} className={"cancel"} disabled={true} />
-            )}
-            <Button text={"Save"} className={"action"} disabled={true} />
-          </div>
+          {diaryState ? (
+            <div className={styles.edit}>
+              <Button text={"Delete"} className={"delete"} />
+              <Button text={"Save"} className={"action"} />
+            </div>
+          ) : (
+            <></>
+          )}
           {diaryState &&
             diaryState.comment.map((comment) => {
               const commentDateTime =
@@ -118,7 +110,6 @@ function Modal() {
                         <IoTrashOutline />
                       </button>
                     </div>
-                    <div className={styles.line}></div>
                   </div>
                 </>
               );
