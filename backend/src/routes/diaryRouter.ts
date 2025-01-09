@@ -1,5 +1,10 @@
 import express from "express";
-import { getDiary, postDiary } from "../controllers/diaryController";
+import {
+  deleteDiary,
+  getDiary,
+  postDiary,
+} from "../controllers/diaryController";
+import { parseId, RequestWithId } from "../middlewares/parseId.middleware";
 
 export const diaryRouter = express.Router();
 
@@ -7,3 +12,6 @@ export const diaryRouter = express.Router();
 
 diaryRouter.get("/", getDiary);
 diaryRouter.post("/", postDiary);
+diaryRouter.delete("/:id", parseId, (req, res) =>
+  deleteDiary(req as RequestWithId, res)
+);
