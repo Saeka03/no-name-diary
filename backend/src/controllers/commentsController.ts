@@ -1,5 +1,6 @@
 import { prisma } from "../../prisma/prismaClient";
 import { Request, Response } from "express";
+import { RequestWithId } from "../middlewares/parseId.middleware";
 
 export const getComments = async (_: Request, res: Response) => {
   try {
@@ -29,6 +30,17 @@ export const postComment = async (
       },
     });
     res.status(200).json({ comment });
+  } catch (error) {
+    res.status(500).json({ error: `${error}` });
+  }
+};
+
+export const deleteComment = async (req: RequestWithId, res: Response) => {
+  try {
+    const deletedComment = await prisma.comment.delete({
+      where: { id: req.id },
+    });
+    res.status(200).json({ deletedComment });
   } catch (error) {
     res.status(500).json({ error: `${error}` });
   }
