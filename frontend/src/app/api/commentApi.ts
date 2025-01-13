@@ -5,6 +5,7 @@ const headers = {
   "Content-Type": "Application/json",
 };
 
+// POST comment
 export const addComment = async (
   dateTime: Date,
   content: string,
@@ -14,5 +15,13 @@ export const addComment = async (
     method: "POST",
     headers,
     body: JSON.stringify({ dateTime, content, diaryId }),
+  }).then((res) => res.json());
+};
+
+// DELETE comment
+export const deleteComment = async (id) => {
+  return await fetch(`${url}/${id}`, {
+    method: "DELETE",
+    headers,
   }).then((res) => res.json());
 };

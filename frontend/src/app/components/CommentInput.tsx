@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styles from "./CommentInput.module.scss";
 import Button from "./Button";
-import { useModalContext } from "../contexts/ModalContexts";
+import { useModalContext } from "../contexts/ModalContext";
 import { addComment } from "../api/commentApi";
 
 function CommentInput() {

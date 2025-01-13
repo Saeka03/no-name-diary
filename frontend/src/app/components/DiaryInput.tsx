@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styles from "./DiaryInput.module.scss";
 import Button from "./Button";
-import { useModalContext } from "../contexts/ModalContexts";
+import { useModalContext } from "../contexts/ModalContext";
 import { addDiary } from "../api/diaryApi";
 
 function DiaryInput() {

@@ -2,15 +2,13 @@
 
 import React from "react";
 import styles from "./Modal.module.scss";
-import { AiOutlineLike } from "react-icons/ai";
-import { FaRegFaceLaughSquint } from "react-icons/fa6";
-import { FaRegFaceSadCry } from "react-icons/fa6";
-import { useModalContext } from "../contexts/ModalContexts";
+import { useModalContext } from "../contexts/ModalContext";
 import { formatDate } from "../utils/dateUtils";
 import Button from "./Button";
 import DiaryInput from "./DiaryInput";
 import CommentInput from "./CommentInput";
 import CommentDisplay from "./CommentDisplay";
+import DiaryDisplay from "./DiaryDisplay";
 
 function Modal() {
   const { isModalOpen, selectedDate, diaryState, closeModalHandler } =
@@ -50,47 +48,7 @@ function Modal() {
             </div>
           </div>
           <div className={styles.line}></div>
-          {diaryState ? (
-            <>
-              <h1>{diaryState.title}</h1>
-              <div className={styles.line}></div>
-              <div className={styles.contents}>{diaryState.content}</div>
-            </>
-          ) : (
-            <DiaryInput />
-          )}
-          {diaryState ? (
-            <div className={styles.reactions}>
-              <div className={styles.reactionItems}>
-                <button className={styles.reaction}>
-                  <AiOutlineLike />
-                </button>
-                <p>{diaryState.like}</p>
-              </div>
-              <div className={styles.reactionItems}>
-                <button className={styles.reaction}>
-                  <FaRegFaceLaughSquint />
-                </button>
-                <p>{diaryState.laugh}</p>
-              </div>
-              <div className={styles.reactionItems}>
-                <button className={styles.reaction}>
-                  <FaRegFaceSadCry />
-                </button>
-                <p>{diaryState.cry}</p>
-              </div>
-            </div>
-          ) : (
-            <></>
-          )}
-          {diaryState ? (
-            <div className={styles.edit}>
-              <Button text={"Delete"} className={"delete"} />
-              <Button text={"Save"} className={"action"} />
-            </div>
-          ) : (
-            <></>
-          )}
+          {diaryState ? <DiaryDisplay diary={diaryState} /> : <DiaryInput />}
           {diaryState &&
             diaryState.comment.map((comment) => (
               <CommentDisplay key={comment.id} comment={comment} />

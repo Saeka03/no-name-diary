@@ -20,6 +20,7 @@ export const getDiaries = async () => {
   }
 };
 
+// POST diary
 export const addDiary = async (
   dateTime: Date,
   title: string,
@@ -29,5 +30,13 @@ export const addDiary = async (
     method: "POST",
     headers,
     body: JSON.stringify({ dateTime, title, content }),
+  }).then((res) => res.json());
+};
+
+// DELETE diary
+export const deleteDiary = async (id) => {
+  return await fetch(`${url}/${id}`, {
+    method: "DELETE",
+    headers,
   }).then((res) => res.json());
 };
