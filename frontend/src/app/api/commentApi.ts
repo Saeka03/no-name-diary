@@ -19,7 +19,7 @@ export const addComment = async (
 };
 
 // DELETE comment
-export const deleteDiary = async (id) => {
+export const deleteComment = async (id) => {
   return await fetch(`${url}/${id}`, {
     method: "DELETE",
     headers,
