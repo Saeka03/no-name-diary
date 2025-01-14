@@ -15,7 +15,7 @@ export const getDiaries = async () => {
     const diaries = await response.json();
     return diaries;
   } catch (error) {
-    console.error("Failed to fetch classes:", error);
+    console.error("Failed to fetch diaries:", error);
     throw error;
   }
 };

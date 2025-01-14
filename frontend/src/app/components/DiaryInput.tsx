@@ -12,6 +12,17 @@ function DiaryInput() {
   const [diaryContent, setDiaryContent] = useState<string>("");
 
   const addDiaryHandler = async () => {
+    if (title === "" && diaryContent === "") {
+      alert("Please write the title and the diary entries.");
+      return;
+    } else if (title === "") {
+      alert("Please write the title.");
+      return;
+    } else if (diaryContent === "") {
+      alert("Please write the diary entries.");
+      return;
+    }
+
     try {
       await addDiary(new Date(selectedDate), title, diaryContent);
     } catch (error) {

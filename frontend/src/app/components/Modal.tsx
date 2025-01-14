@@ -6,7 +6,6 @@ import { useModalContext } from "../contexts/ModalContext";
 import { formatDate } from "../utils/dateUtils";
 import Button from "./Button";
 import DiaryInput from "./DiaryInput";
-import CommentInput from "./CommentInput";
 import CommentDisplay from "./CommentDisplay";
 import DiaryDisplay from "./DiaryDisplay";
 
@@ -49,11 +48,7 @@ function Modal() {
           </div>
           <div className={styles.line}></div>
           {diaryState ? <DiaryDisplay diary={diaryState} /> : <DiaryInput />}
-          {diaryState &&
-            diaryState.comment.map((comment) => (
-              <CommentDisplay key={comment.id} comment={comment} />
-            ))}
-          {diaryState ? <CommentInput /> : <></>}
+          <CommentDisplay diaryId={diaryState.id} />
         </div>
       </div>
     </div>

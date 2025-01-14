@@ -37,7 +37,7 @@ function Calendar() {
       }
     };
     fetchDiary();
-  }, []);
+  }, [diaries]);
 
   const clickEventHandler = (info) => {
     const eventId = info.event.id;
