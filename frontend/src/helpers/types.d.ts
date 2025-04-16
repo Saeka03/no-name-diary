@@ -14,3 +14,14 @@ type CommentType = {
   dateTime: Date;
   content: string;
 };
+
+type DiaryStateType = {
+  id: string;
+  date: Date;
+  title: string;
+  content: string;
+  like: number;
+  laugh: number;
+  cry: number;
+  comment: CommentType[];
+};

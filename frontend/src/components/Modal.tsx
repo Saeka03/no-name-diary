@@ -16,7 +16,7 @@ function Modal() {
   if (!isModalOpen) return null;
 
   const diaryDate = diaryState
-    ? formatDate(new Date(diaryState.dateTime))
+    ? formatDate(new Date(diaryState.date))
     : formatDate(new Date(selectedDate));
 
   return (
@@ -48,7 +48,11 @@ function Modal() {
           </div>
           <div className={styles.line}></div>
           {diaryState ? <DiaryDisplay diary={diaryState} /> : <DiaryInput />}
-          <CommentDisplay diaryId={diaryState.id} />
+          {diaryState ? (
+            <CommentDisplay diaryId={Number(diaryState.id)} />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./CommentDisplay.module.scss";
 import { formatDate, formatTime } from "../utils/dateUtils";
 import { IoTrashOutline } from "react-icons/io5";
-import { deleteComment, getComments, addComment } from "../api/commentApi";
+import { deleteComment, getComments, addComment } from "../app/api/commentApi";
 import Button from "./Button";
 import { useModalContext } from "../contexts/ModalContext";
 
@@ -27,7 +27,7 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
       }
     };
     fetchComment();
-  }, [comments]);
+  }, []);
 
   const addCommentHandler = async () => {
     if (content === "") {
@@ -36,7 +36,7 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
     }
 
     try {
-      await addComment(new Date(), content, diaryState.id);
+      await addComment(new Date(), content, Number(diaryState.id));
       setContent("");
     } catch (error) {
       if (error instanceof Error) {

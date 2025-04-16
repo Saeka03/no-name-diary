@@ -4,19 +4,20 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaRegFaceLaughSquint } from "react-icons/fa6";
 import { FaRegFaceSadCry } from "react-icons/fa6";
 import Button from "./Button";
-import { deleteDiary } from "../api/diaryApi";
+import { deleteDiary } from "../app/api/diaryApi";
 import { useModalContext } from "../contexts/ModalContext";
 
 type DiaryDisplayProps = {
-  diary: DiaryType;
+  diary: DiaryStateType;
 };
 
 function DiaryDisplay({ diary }: DiaryDisplayProps) {
-  const { closeModalHandler } = useModalContext();
+  const { closeModalHandler, setDiaryState } = useModalContext();
 
   const deleteDiaryHandler = async () => {
     try {
       await deleteDiary(diary.id);
+      setDiaryState(null);
       closeModalHandler();
     } catch (error) {
       console.error(error);

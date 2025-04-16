@@ -7,8 +7,9 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styles from "./Calendar.module.scss";
 import { useModalContext } from "../contexts/ModalContext";
-import { getDiaries } from "../api/diaryApi";
+import { getDiaries } from "../app/api/diaryApi";
 import { formatISODate } from "../utils/dateUtils";
+import { useDiariesStore } from "../stores/diaryStore";
 
 type EventType = {
   title: string;
@@ -16,33 +17,19 @@ type EventType = {
 };
 
 function Calendar() {
-  const { openModalHandler } = useModalContext();
-  const [diaries, setDiaries] = useState<DiaryType[]>([]);
+  const { openModalHandler, diaryState } = useModalContext();
   const [events, setEvents] = useState<EventType[]>([]);
+  const diaries = useDiariesStore((state) => state.diaries);
+  const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
 
   useEffect(() => {
-    const fetchDiary = async () => {
-      try {
-        const data = await getDiaries();
-        setDiaries(data.diaries);
-
-        const newEvents = data.diaries.map((diary) => ({
-          id: diary.id,
-          title: diary.title,
-          date: formatISODate(diary.dateTime),
-        }));
-        setEvents((prevEvents) => [...prevEvents, ...newEvents]);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchDiary();
-  }, [diaries]);
+    fetchDiaries();
+  }, []);
 
   const clickEventHandler = (info) => {
     const eventId = info.event.id;
-    const diaryState = diaries.find((diary) => diary.id == eventId);
-    openModalHandler(diaryState);
+    const selectedDiary = diaries.find((diary) => diary.id == eventId);
+    openModalHandler(selectedDiary);
   };
 
   return (
@@ -74,7 +61,7 @@ function Calendar() {
             dayGridFrame.appendChild(plusButton);
           }
         }}
-        events={events}
+        events={diaries}
         eventClick={(info) => clickEventHandler(info)}
       />
     </div>
