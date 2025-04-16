@@ -5,11 +5,11 @@ import { createContext, ReactNode, useContext, useState } from "react";
 type ModalContextType = {
   isModalOpen: boolean;
   selectedDate: Date | null;
-  diaryState: DiaryType;
+  diaryState: DiaryStateType;
   setIsModalOpen: (isOpen: boolean) => void;
   setSelectedDate: (date: Date) => void;
-  setDiaryState: (diaryState: DiaryType) => void;
-  openModalHandler: (param: Date | DiaryType) => void;
+  setDiaryState: (diaryState: DiaryStateType) => void;
+  openModalHandler: (param: Date | DiaryStateType) => void;
   closeModalHandler: () => void;
 };
 
@@ -29,9 +29,9 @@ export const ModalContext = createContext<ModalContextType>(defaultValue);
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [diaryState, setDiaryState] = useState<DiaryType | null>(null);
+  const [diaryState, setDiaryState] = useState<DiaryStateType | null>(null);
 
-  const openModalHandler = (param: Date | DiaryType) => {
+  const openModalHandler = (param: Date | DiaryStateType) => {
     if (param instanceof Date) {
       setSelectedDate(param);
       setDiaryState(null);
@@ -45,6 +45,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const closeModalHandler = () => {
     setIsModalOpen(false);
     setSelectedDate(null);
+    setDiaryState(null);
   };
 
   return (

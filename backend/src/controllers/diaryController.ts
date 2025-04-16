@@ -13,6 +13,21 @@ export const getDiary = async (_: Request, res: Response): Promise<void> => {
   }
 };
 
+export const getDiaryById = async (
+  req: RequestWithId,
+  res: Response
+): Promise<void> => {
+  try {
+    const diary = await prisma.diary.findMany({
+      where: { id: req.id },
+      include: { comment: true },
+    });
+    res.status(200).json({ diary });
+  } catch (error) {
+    res.status(500).json({ error: `${error}` });
+  }
+};
+
 export const postDiary = async (req: Request, res: Response): Promise<void> => {
   const { dateTime, title, content } = req.body;
   if (!dateTime || !title || !content) {

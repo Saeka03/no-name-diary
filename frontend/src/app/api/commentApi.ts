@@ -5,6 +5,20 @@ const headers = {
   "Content-Type": "Application/json",
 };
 
+// GET comments
+export const getComments = async (diaryId) => {
+  try {
+    const response = await fetch(`${url}?diaryId=${diaryId}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const comments = await response.json();
+    return comments;
+  } catch (error) {
+    console.error("Failed to fetch comments:", error);
+  }
+};
+
 // POST comment
 export const addComment = async (
   dateTime: Date,

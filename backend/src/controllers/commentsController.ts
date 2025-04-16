@@ -2,9 +2,16 @@ import { prisma } from "../../prisma/prismaClient";
 import { Request, Response } from "express";
 import { RequestWithId } from "../middlewares/parseId.middleware";
 
-export const getComments = async (_: Request, res: Response) => {
+export const getComments = async (req: Request, res: Response) => {
+  const diaryId = parseInt(req.query.diaryId as string);
+  if (isNaN(diaryId)) {
+    res.status(400).json({ error: "Invalid diary ID" });
+    return;
+  }
+
   try {
     const comments = await prisma.comment.findMany({
+      where: { diaryId },
       include: { diary: true },
     });
     res.status(200).json({ comments });

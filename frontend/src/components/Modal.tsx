@@ -6,7 +6,6 @@ import { useModalContext } from "../contexts/ModalContext";
 import { formatDate } from "../utils/dateUtils";
 import Button from "./Button";
 import DiaryInput from "./DiaryInput";
-import CommentInput from "./CommentInput";
 import CommentDisplay from "./CommentDisplay";
 import DiaryDisplay from "./DiaryDisplay";
 
@@ -17,7 +16,7 @@ function Modal() {
   if (!isModalOpen) return null;
 
   const diaryDate = diaryState
-    ? formatDate(new Date(diaryState.dateTime))
+    ? formatDate(new Date(diaryState.date))
     : formatDate(new Date(selectedDate));
 
   return (
@@ -49,11 +48,11 @@ function Modal() {
           </div>
           <div className={styles.line}></div>
           {diaryState ? <DiaryDisplay diary={diaryState} /> : <DiaryInput />}
-          {diaryState &&
-            diaryState.comment.map((comment) => (
-              <CommentDisplay key={comment.id} comment={comment} />
-            ))}
-          {diaryState ? <CommentInput /> : <></>}
+          {diaryState ? (
+            <CommentDisplay diaryId={Number(diaryState.id)} />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>
