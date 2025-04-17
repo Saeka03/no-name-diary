@@ -1,24 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styles from "./Calendar.module.scss";
 import { useModalContext } from "../contexts/ModalContext";
-import { getDiaries } from "../app/api/diaryApi";
-import { formatISODate } from "../utils/dateUtils";
 import { useDiariesStore } from "../stores/diaryStore";
-
-type EventType = {
-  title: string;
-  date: string;
-};
 
 function Calendar() {
   const { openModalHandler, diaryState } = useModalContext();
-  const [events, setEvents] = useState<EventType[]>([]);
   const diaries = useDiariesStore((state) => state.diaries);
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
 

@@ -8,7 +8,7 @@ import { deleteDiary } from "../app/api/diaryApi";
 import { useModalContext } from "../contexts/ModalContext";
 
 type DiaryDisplayProps = {
-  diary: DiaryStateType;
+  diary: DiaryType;
 };
 
 function DiaryDisplay({ diary }: DiaryDisplayProps) {

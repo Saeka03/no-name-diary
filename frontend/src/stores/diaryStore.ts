@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { getDiaries } from "../app/api/diaryApi";
-import { formatISODate } from "../utils/dateUtils";
 
 interface DiariesState {
   diaries: {
@@ -22,19 +21,16 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
     try {
       const data = await getDiaries();
       set({
-        diaries: data.diaries.map((diary) => {
-          console.log(diary.dateTime);
-          return {
-            id: diary.id.toString(),
-            title: diary.title,
-            date: diary.dateTime,
-            content: diary.content,
-            like: diary.like,
-            laugh: diary.laugh,
-            cry: diary.cry,
-            comment: diary.comment,
-          };
-        }),
+        diaries: data.diaries.map((diary) => ({
+          id: diary.id.toString(),
+          title: diary.title,
+          date: diary.dateTime,
+          content: diary.content,
+          like: diary.like,
+          laugh: diary.laugh,
+          cry: diary.cry,
+          comment: diary.comment,
+        })),
       });
     } catch (error) {
       console.error(error);

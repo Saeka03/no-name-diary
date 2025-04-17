@@ -4,29 +4,23 @@ import React, { useEffect, useState } from "react";
 import styles from "./CommentDisplay.module.scss";
 import { formatDate, formatTime } from "../utils/dateUtils";
 import { IoTrashOutline } from "react-icons/io5";
-import { deleteComment, getComments, addComment } from "../app/api/commentApi";
+import { deleteComment, addComment } from "../app/api/commentApi";
 import Button from "./Button";
 import { useModalContext } from "../contexts/ModalContext";
+import { useCommentsStore } from "../stores/commentStore";
 
 type CommentDisplayProps = {
   diaryId: number;
 };
 
 function CommentDisplay({ diaryId }: CommentDisplayProps) {
-  const [comments, setComments] = useState<CommentType[]>([]);
   const { diaryState } = useModalContext();
   const [content, setContent] = useState<string>("");
+  const comments = useCommentsStore((state) => state.comments);
+  const fetchComments = useCommentsStore((state) => state.fetchComments);
 
   useEffect(() => {
-    const fetchComment = async () => {
-      try {
-        const data = await getComments(diaryId);
-        setComments(data.comments);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchComment();
+    fetchComments(diaryId);
   }, []);
 
   const addCommentHandler = async () => {
@@ -37,6 +31,7 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
 
     try {
       await addComment(new Date(), content, Number(diaryState.id));
+      fetchComments(diaryId);
       setContent("");
     } catch (error) {
       if (error instanceof Error) {
@@ -60,9 +55,9 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
       {comments &&
         comments.map((comment) => {
           const commentDateTime =
-            formatDate(new Date(comment.dateTime)) +
+            formatDate(new Date(comment.date)) +
             " " +
-            formatTime(new Date(comment.dateTime));
+            formatTime(new Date(comment.date));
 
           return (
             <div key={comment.id}>
