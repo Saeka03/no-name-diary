@@ -11,6 +11,6 @@ type DiaryType = {
 
 type CommentType = {
   id: number;
-  dateTime: Date;
+  date: Date;
   content: string;
 };
