@@ -14,10 +14,12 @@ type DiaryDisplayProps = {
 function DiaryDisplay({ diary }: DiaryDisplayProps) {
   const { closeModalHandler, setDiaryState } = useModalContext();
   const deleteDiary = useDiariesStore((state) => state.deleteDiary);
+  const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
 
   const deleteDiaryHandler = async () => {
     try {
       await deleteDiary(diary.id);
+      await fetchDiaries();
       setDiaryState(null);
       closeModalHandler();
     } catch (error) {

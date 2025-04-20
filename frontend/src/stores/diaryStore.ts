@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { getDiaries } from "../app/api/diaryApi";
 
 interface DiariesState {
   diaries: {
@@ -22,30 +21,6 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
   diaries: [],
   fetchDiaries: async () => {
     try {
-      try {
-        // const data = await getDiaries();
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries`
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        set({
-          diaries: data.diaries.map((diary) => ({
-            id: diary.id.toString(),
-            title: diary.title,
-            date: diary.dateTime,
-            content: diary.content,
-            like: diary.like,
-            laugh: diary.laugh,
-            cry: diary.cry,
-            comment: diary.comment,
-          })),
-        });
-      } catch (error) {
-        console.error(error);
-      }
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries`
       );
