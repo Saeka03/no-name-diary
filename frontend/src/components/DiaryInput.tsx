@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import styles from "./DiaryInput.module.scss";
 import Button from "./Button";
 import { useModalContext } from "../contexts/ModalContext";
-import { addDiary } from "../app/api/diaryApi";
 import { useDiariesStore } from "../stores/diaryStore";
 
 function DiaryInput() {

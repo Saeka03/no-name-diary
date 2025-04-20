@@ -14,6 +14,8 @@ interface DiariesState {
   }[];
   fetchDiaries: () => Promise<void>;
   postDiary: (dateTime: Date, title: string, content: string) => Promise<void>;
+  getDiary: (id: string) => Promise<void>;
+  deleteDiary: (id: string) => Promise<void>;
 }
 
 export const useDiariesStore = create<DiariesState>()((set) => ({
@@ -23,7 +25,7 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
       try {
         // const data = await getDiaries();
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/dairies`
+          `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -45,7 +47,7 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
         console.error(error);
       }
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/dairies`
+        `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -70,10 +72,41 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
   postDiary: async (dateTime, title, content) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/dairies`,
+        `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries`,
         {
           method: "POST",
           body: JSON.stringify({ dateTime, title, content }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  getDiary: async (id) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  deleteDiary: async (id) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`,
+        {
+          method: "DELETE",
         }
       );
       if (!response.ok) {
