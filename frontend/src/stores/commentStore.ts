@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { getComments } from "../app/api/commentApi";
 
 interface CommentState {
   comments: CommentType[];
