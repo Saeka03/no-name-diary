@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./CommentDisplay.module.scss";
 import { formatDate, formatTime } from "../utils/dateUtils";
 import { IoTrashOutline } from "react-icons/io5";
-import { deleteComment, addComment } from "../app/api/commentApi";
 import Button from "./Button";
 import { useModalContext } from "../contexts/ModalContext";
 import { useCommentsStore } from "../stores/commentStore";
@@ -18,6 +17,8 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
   const [content, setContent] = useState<string>("");
   const comments = useCommentsStore((state) => state.comments);
   const fetchComments = useCommentsStore((state) => state.fetchComments);
+  const postComment = useCommentsStore((state) => state.postComment);
+  const deleteComment = useCommentsStore((state) => state.deleteComment);
 
   useEffect(() => {
     fetchComments(diaryId);
@@ -30,7 +31,7 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
     }
 
     try {
-      await addComment(new Date(), content, Number(diaryState.id));
+      await postComment(new Date(), content, Number(diaryState.id));
       fetchComments(diaryId);
       setContent("");
     } catch (error) {
@@ -42,9 +43,10 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
     }
   };
 
-  const commentDeleteHandler = async (id: number) => {
+  const commentDeleteHandler = async (commentId: number) => {
     try {
-      await deleteComment(id);
+      await deleteComment(diaryId, commentId);
+      fetchComments(diaryId);
     } catch (error) {
       console.error(error);
     }

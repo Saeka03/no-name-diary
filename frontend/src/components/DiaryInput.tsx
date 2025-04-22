@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import styles from "./DiaryInput.module.scss";
 import Button from "./Button";
 import { useModalContext } from "../contexts/ModalContext";
-import { addDiary } from "../app/api/diaryApi";
 import { useDiariesStore } from "../stores/diaryStore";
 
 function DiaryInput() {
@@ -12,6 +11,7 @@ function DiaryInput() {
   const [title, setTitle] = useState<string>("");
   const [diaryContent, setDiaryContent] = useState<string>("");
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
+  const postDiary = useDiariesStore((state) => state.postDiary);
 
   const addDiaryHandler = async () => {
     if (title === "" && diaryContent === "") {
@@ -26,7 +26,7 @@ function DiaryInput() {
     }
 
     try {
-      await addDiary(new Date(selectedDate), title, diaryContent);
+      await postDiary(new Date(selectedDate), title, diaryContent);
       await fetchDiaries();
     } catch (error) {
       if (error instanceof Error) {

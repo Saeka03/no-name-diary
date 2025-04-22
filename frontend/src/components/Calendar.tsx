@@ -55,6 +55,8 @@ function Calendar() {
         }}
         events={diaries}
         eventClick={(info) => clickEventHandler(info)}
+        displayEventTime={false}
+        eventDisplay="block"
       />
     </div>
   );
