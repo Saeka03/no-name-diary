@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import styles from "./DiaryDisplay.module.scss";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegFaceLaughSquint } from "react-icons/fa6";
@@ -8,13 +10,19 @@ import { useModalContext } from "../contexts/ModalContext";
 import { useDiariesStore } from "../stores/diaryStore";
 
 type DiaryDisplayProps = {
-  diary: DiaryType;
+  id: string;
 };
 
-function DiaryDisplay({ diary }: DiaryDisplayProps) {
+function DiaryDisplay({ id }: DiaryDisplayProps) {
   const { closeModalHandler, setDiaryState } = useModalContext();
   const deleteDiary = useDiariesStore((state) => state.deleteDiary);
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
+  const fetchDiary = useDiariesStore((state) => state.fetchDiary);
+  const diary = useDiariesStore((state) => state.diary);
+
+  useEffect(() => {
+    fetchDiary(id);
+  }, []);
 
   const deleteDiaryHandler = async () => {
     try {
@@ -29,27 +37,27 @@ function DiaryDisplay({ diary }: DiaryDisplayProps) {
 
   return (
     <>
-      <h1>{diary.title}</h1>
+      <h1>{diary && diary.title}</h1>
       <div className={styles.line}></div>
-      <div className={styles.contents}>{diary.content}</div>
+      <div className={styles.contents}>{diary && diary.content}</div>
       <div className={styles.reactions}>
         <div className={styles.reactionItems}>
           <button className={styles.reaction}>
             <AiOutlineLike />
           </button>
-          <p>{diary.like}</p>
+          <p>{diary && diary.like}</p>
         </div>
         <div className={styles.reactionItems}>
           <button className={styles.reaction}>
             <FaRegFaceLaughSquint />
           </button>
-          <p>{diary.laugh}</p>
+          <p>{diary && diary.laugh}</p>
         </div>
         <div className={styles.reactionItems}>
           <button className={styles.reaction}>
             <FaRegFaceSadCry />
           </button>
-          <p>{diary.cry}</p>
+          <p>{diary && diary.cry}</p>
         </div>
       </div>
       <div className={styles.edit}>

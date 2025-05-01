@@ -11,14 +11,27 @@ interface DiariesState {
     cry: number;
     comment: CommentType[];
   }[];
+  diary: {
+    id: string;
+    date: Date;
+    title: string;
+    content: string;
+    like: number;
+    laugh: number;
+    cry: number;
+    comment: CommentType[];
+  } | null;
   fetchDiaries: () => Promise<void>;
+  fetchDiary: (id: string) => Promise<void>;
   postDiary: (dateTime: Date, title: string, content: string) => Promise<void>;
   getDiary: (id: string) => Promise<void>;
   deleteDiary: (id: string) => Promise<void>;
+  clearDiary: () => void;
 }
 
 export const useDiariesStore = create<DiariesState>()((set) => ({
   diaries: [],
+  diary: null,
   fetchDiaries: async () => {
     try {
       const response = await fetch(
@@ -39,6 +52,31 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
           cry: diary.cry,
           comment: diary.comment,
         })),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  fetchDiary: async (id) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      set({
+        diary: {
+          id: data.diary.id.toString(),
+          title: data.diary.title,
+          date: data.diary.dateTime,
+          content: data.diary.content,
+          like: data.diary.like,
+          laugh: data.diary.laugh,
+          cry: data.diary.cry,
+          comment: data.diary.comment,
+        },
       });
     } catch (error) {
       console.error(error);
@@ -92,5 +130,8 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
     } catch (error) {
       console.error(error);
     }
+  },
+  clearDiary: () => {
+    set({ diary: null });
   },
 }));
