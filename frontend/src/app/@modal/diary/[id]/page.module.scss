@@ -1,0 +1,57 @@
+@import "../../../variables.module.scss";
+
+.wrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+
+  .container {
+    width: 60%;
+    height: 90%;
+    max-width: 600px;
+    background-color: $blue-background;
+    z-index: 2;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+
+    .modal {
+      margin: 1rem;
+      padding: 0.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .buttons {
+          display: flex;
+          gap: 1rem;
+
+          .closeButton {
+            color: $primary;
+            border: none;
+            background-color: transparent;
+            font-size: 2rem;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .line {
+        width: 100%;
+        border-bottom: 1px solid $gray-text;
+        margin: 1rem 0;
+      }
+    }
+  }
+}

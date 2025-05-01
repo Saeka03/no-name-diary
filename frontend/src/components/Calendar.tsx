@@ -8,11 +8,13 @@ import interactionPlugin from "@fullcalendar/interaction";
 import styles from "./Calendar.module.scss";
 import { useModalContext } from "../contexts/ModalContext";
 import { useDiariesStore } from "../stores/diaryStore";
+import { useRouter } from "next/navigation";
 
 function Calendar() {
   const { openModalHandler, diaryState } = useModalContext();
   const diaries = useDiariesStore((state) => state.diaries);
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
+  const router = useRouter();
 
   useEffect(() => {
     fetchDiaries();
@@ -20,8 +22,7 @@ function Calendar() {
 
   const clickEventHandler = (info) => {
     const eventId = info.event.id;
-    const selectedDiary = diaries.find((diary) => diary.id == eventId);
-    openModalHandler(selectedDiary);
+    router.push(`/diary/${eventId}`);
   };
 
   return (
