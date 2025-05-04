@@ -1,35 +1,25 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./DiaryDisplay.module.scss";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegFaceLaughSquint } from "react-icons/fa6";
 import { FaRegFaceSadCry } from "react-icons/fa6";
 import Button from "./Button";
-import { useModalContext } from "../contexts/ModalContext";
 import { useDiariesStore } from "../stores/diaryStore";
 
 type DiaryDisplayProps = {
-  id: string;
+  diary: DiaryType;
 };
 
-function DiaryDisplay({ id }: DiaryDisplayProps) {
-  const { closeModalHandler, setDiaryState } = useModalContext();
+function DiaryDisplay({ diary }: DiaryDisplayProps) {
   const deleteDiary = useDiariesStore((state) => state.deleteDiary);
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
-  const fetchDiary = useDiariesStore((state) => state.fetchDiary);
-  const diary = useDiariesStore((state) => state.diary);
-
-  useEffect(() => {
-    fetchDiary(id);
-  }, []);
 
   const deleteDiaryHandler = async () => {
     try {
       await deleteDiary(diary.id);
       await fetchDiaries();
-      setDiaryState(null);
-      closeModalHandler();
     } catch (error) {
       console.error(error);
     }

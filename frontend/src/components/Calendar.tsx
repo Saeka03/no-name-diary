@@ -6,12 +6,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styles from "./Calendar.module.scss";
-import { useModalContext } from "../contexts/ModalContext";
 import { useDiariesStore } from "../stores/diaryStore";
 import { useRouter } from "next/navigation";
 
 function Calendar() {
-  const { openModalHandler, diaryState } = useModalContext();
   const diaries = useDiariesStore((state) => state.diaries);
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
   const router = useRouter();
@@ -45,7 +43,7 @@ function Calendar() {
 
           // Add click event listener to the button
           plusButton.addEventListener("click", () => {
-            openModalHandler(info.date);
+            router.push(`/diary/new-diary?query=${info.date}`);
           });
 
           // Append it to the day cell

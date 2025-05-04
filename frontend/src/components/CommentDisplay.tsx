@@ -5,7 +5,6 @@ import styles from "./CommentDisplay.module.scss";
 import { formatDate, formatTime } from "../utils/dateUtils";
 import { IoTrashOutline } from "react-icons/io5";
 import Button from "./Button";
-import { useModalContext } from "../contexts/ModalContext";
 import { useCommentsStore } from "../stores/commentStore";
 
 type CommentDisplayProps = {
@@ -13,7 +12,6 @@ type CommentDisplayProps = {
 };
 
 function CommentDisplay({ diaryId }: CommentDisplayProps) {
-  const { diaryState } = useModalContext();
   const [content, setContent] = useState<string>("");
   const comments = useCommentsStore((state) => state.comments);
   const fetchComments = useCommentsStore((state) => state.fetchComments);
@@ -31,7 +29,7 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
     }
 
     try {
-      await postComment(new Date(), content, Number(diaryState.id));
+      await postComment(new Date(), content, diaryId);
       fetchComments(diaryId);
       setContent("");
     } catch (error) {
