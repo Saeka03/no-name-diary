@@ -9,6 +9,7 @@ interface CommentState {
     diaryId: number
   ) => Promise<void>;
   deleteComment: (diaryId: number, commentId: number) => Promise<void>;
+  clearComments: () => void;
 }
 
 export const useCommentsStore = create<CommentState>()((set) => ({
@@ -67,5 +68,8 @@ export const useCommentsStore = create<CommentState>()((set) => ({
     } catch (error) {
       console.error(error);
     }
+  },
+  clearComments: () => {
+    set({ comments: null });
   },
 }));

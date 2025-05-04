@@ -3,15 +3,20 @@
 import React, { useState } from "react";
 import styles from "./DiaryInput.module.scss";
 import Button from "./Button";
-import { useModalContext } from "../contexts/ModalContext";
 import { useDiariesStore } from "../stores/diaryStore";
+import { useRouter } from "next/navigation";
 
-function DiaryInput() {
-  const { selectedDate, closeModalHandler } = useModalContext();
+type DiaryInputProps = {
+  date: Date;
+  handleClose: () => void;
+};
+
+function DiaryInput({ date, handleClose }: DiaryInputProps) {
   const [title, setTitle] = useState<string>("");
   const [diaryContent, setDiaryContent] = useState<string>("");
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
   const postDiary = useDiariesStore((state) => state.postDiary);
+  const router = useRouter();
 
   const addDiaryHandler = async () => {
     if (title === "" && diaryContent === "") {
@@ -26,7 +31,8 @@ function DiaryInput() {
     }
 
     try {
-      await postDiary(new Date(selectedDate), title, diaryContent);
+      await postDiary(date, title, diaryContent);
+      router.back();
       await fetchDiaries();
     } catch (error) {
       if (error instanceof Error) {
@@ -35,7 +41,6 @@ function DiaryInput() {
         alert("Failed to post the diary entry.");
       }
     }
-    closeModalHandler();
   };
 
   return (
@@ -54,11 +59,7 @@ function DiaryInput() {
       ></textarea>
       <div className={styles.line}></div>
       <div className={styles.edit}>
-        <Button
-          text={"Cancel"}
-          className={"cancel"}
-          onClick={closeModalHandler}
-        />
+        <Button text={"Cancel"} className={"cancel"} onClick={handleClose} />
         <Button text={"Save"} className={"action"} onClick={addDiaryHandler} />
       </div>
     </>
