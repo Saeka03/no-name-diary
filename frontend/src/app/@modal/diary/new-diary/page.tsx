@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import styles from "./page.module.scss";
 import { useRouter, useSearchParams } from "next/navigation";
 import DiaryInput from "../../../../components/DiaryInput";
@@ -38,4 +38,10 @@ function NewDiary() {
   );
 }
 
-export default NewDiary;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>loadConfig...</div>}>
+      <NewDiary />
+    </Suspense>
+  );
+}
