@@ -5,3 +5,29 @@ $gray-background: rgba(0, 0, 0, 0.03);
 $blue-background: #f5f6ff;
 $delete: #f44336;
 $purple-background: #dee2ff;
+
+// breakpoints
+$mobile-portrait: 480px;
+$mobile-landscape: 569px;
+$tablet: 769px;
+$desktop: 993px;
+$desktop-large: 1199px;
+
+// Map for breakpoints
+$breakpoints: (
+  "xs": (
+    max-width: $mobile-portrait,
+  ),
+  "sm": (
+    max-width: $mobile-landscape,
+  ),
+  "md": (
+    max-width: $tablet,
+  ),
+  "lg": (
+    max-width: $desktop,
+  ),
+  "xl": (
+    max-width: $desktop-large,
+  ),
+);

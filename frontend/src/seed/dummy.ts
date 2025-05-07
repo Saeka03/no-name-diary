@@ -18,7 +18,7 @@ async function insertDiary() {
       {
         dateTime: new Date(),
         title: "Roboto",
-        content: "blha blha blha",
+        content: "blah blah blah",
         like: 1,
         laugh: 2,
         cry: 3,
@@ -26,7 +26,7 @@ async function insertDiary() {
       {
         dateTime: new Date(),
         title: "Poppins",
-        content: "blha blha blha",
+        content: "blah blah blah",
         like: 0,
         laugh: 0,
         cry: 4,
