@@ -1,27 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import styles from "./DiaryDisplay.module.scss";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegFaceLaughSquint } from "react-icons/fa6";
 import { FaRegFaceSadCry } from "react-icons/fa6";
 import Button from "./Button";
-import Modal from "./Modal";
+import { useModalStore } from "../stores/modalStore";
 
 type DiaryDisplayProps = {
   diary: DiaryType;
 };
 
 function DiaryDisplay({ diary }: DiaryDisplayProps) {
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-
-  const openModal = () => {
-    setIsOpenModal(true);
-  };
-
-  const closeModal = () => {
-    setIsOpenModal(false);
-  };
+  const openModal = useModalStore((state) => state.openModal);
 
   return (
     <>
@@ -52,7 +44,6 @@ function DiaryDisplay({ diary }: DiaryDisplayProps) {
         <Button text={"Delete"} className={"delete"} onClick={openModal} />
         <Button text={"Save"} className={"action"} />
       </div>
-      <Modal diary={diary} isOpenModal={isOpenModal} closeModal={closeModal} />
     </>
   );
 }
