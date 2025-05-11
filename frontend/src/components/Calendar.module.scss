@@ -1,13 +1,24 @@
 @import "../app/variables.module.scss";
+@import "../app/mixin.scss";
 
 .calendar {
   width: 80%;
+  height: 100%;
+  max-width: 650px;
   margin: 0;
   padding: 1rem 2rem;
   background-color: white;
   color: $gray-text;
   font-family: "Poppins", sans-serif;
   position: relative;
+
+  @include responsive("xs") {
+    min-width: 390px;
+  }
+
+  @include responsive("lg") {
+    width: 100%;
+  }
 
   :global(.fc-button),
   :global(.fc-today-button.fc-button.fc-button-primary) {

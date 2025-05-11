@@ -1,0 +1,52 @@
+@import "../app/variables.module.scss";
+
+.display {
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+
+  .modalContainer {
+    padding: 30px;
+    width: 40%;
+    min-width: 250px;
+    height: 20%;
+    max-width: 300px;
+    background-color: $blue-background;
+    z-index: 4;
+    border-radius: 10px;
+    border: 1px solid $gray-text;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+
+    .closeButton {
+      color: $primary;
+      border: none;
+      background-color: transparent;
+      font-size: 1.5rem;
+      cursor: pointer;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+
+    .buttonWrapper {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+    }
+  }
+}
+
+.nonDisplay {
+  display: none;
+}

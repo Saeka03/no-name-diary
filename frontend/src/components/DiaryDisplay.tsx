@@ -6,32 +6,14 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaRegFaceLaughSquint } from "react-icons/fa6";
 import { FaRegFaceSadCry } from "react-icons/fa6";
 import Button from "./Button";
-import { useDiariesStore } from "../stores/diaryStore";
-import { useRouter } from "next/navigation";
-import { useCommentsStore } from "../stores/commentStore";
+import { useModalStore } from "../stores/modalStore";
 
 type DiaryDisplayProps = {
   diary: DiaryType;
 };
 
 function DiaryDisplay({ diary }: DiaryDisplayProps) {
-  const deleteDiary = useDiariesStore((state) => state.deleteDiary);
-  const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
-  const clearDiary = useDiariesStore((state) => state.clearDiary);
-  const clearComments = useCommentsStore((state) => state.clearComments);
-  const router = useRouter();
-
-  const deleteDiaryHandler = async () => {
-    try {
-      await deleteDiary(diary.id);
-      await fetchDiaries();
-      clearDiary();
-      clearComments();
-      router.back();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const openModal = useModalStore((state) => state.openModal);
 
   return (
     <>
@@ -59,11 +41,7 @@ function DiaryDisplay({ diary }: DiaryDisplayProps) {
         </div>
       </div>
       <div className={styles.edit}>
-        <Button
-          text={"Delete"}
-          className={"delete"}
-          onClick={deleteDiaryHandler}
-        />
+        <Button text={"Delete"} className={"delete"} onClick={openModal} />
         <Button text={"Save"} className={"action"} />
       </div>
     </>

@@ -1,0 +1,7 @@
+@mixin responsive($size) {
+  $query: inspect(map-get($breakpoints, $size));
+
+  @media #{$query} {
+    @content;
+  }
+}

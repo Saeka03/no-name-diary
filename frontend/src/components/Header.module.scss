@@ -1,8 +1,10 @@
 @import "../app/variables.module.scss";
+@import "../app/mixin.scss";
 
 .header {
   width: 100%;
-  height: 100px;
+  min-height: 100px;
+  max-height: 150px;
 
   .img {
     width: 100%;
@@ -12,12 +14,16 @@
 
   .title {
     font-family: "Yellowtail";
-    font-size: 3.5rem;
+    font-size: 3rem;
     color: $primary;
 
     position: absolute;
-    top: 2%;
-    left: 3%;
+    top: 1%;
+    left: 2%;
     white-space: nowrap;
+
+    @include responsive("lg") {
+      font-size: 2rem;
+    }
   }
 }
