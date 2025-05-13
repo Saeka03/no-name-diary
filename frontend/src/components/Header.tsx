@@ -36,7 +36,7 @@ async function Header() {
         </Link>
       ) : (
         <div>
-          <div>{`Hi! ${user.email}`}</div>
+          <div>{`Hi! ${user.user_metadata.username}`}</div>
           <Logout />
           {/* <Button className="action" text="Logout" onClick={logoutHandler} /> */}
         </div>
