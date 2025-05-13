@@ -38,3 +38,40 @@ export async function DELETE(req: Request, context: any) {
     return Response.json({ error: `${error}` }, { status: 500 });
   }
 }
+
+export async function PATCH(req: Request, context: any) {
+  try {
+    const { params } = context;
+    const id = parseInt(params.id);
+    const body = await req.json();
+    if (
+      !body.title ||
+      !body.content ||
+      !body.like ||
+      !body.laugh ||
+      !body.cry
+    ) {
+      return Response.json(
+        { message: "Values are not found" },
+        { status: 400 }
+      );
+    }
+
+    return await prisma.$transaction(async (tx) => {
+      const updateDiary = await tx.diary.update({
+        where: { id },
+        data: {
+          title: body.title,
+          content: body.content,
+          like: body.like,
+          laugh: body.laugh,
+          cry: body.cry,
+        },
+      });
+
+      return Response.json({ updateDiary }, { status: 200 });
+    });
+  } catch (error) {
+    return Response.json({ error: `${error}` }, { status: 500 });
+  }
+}
