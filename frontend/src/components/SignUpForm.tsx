@@ -37,6 +37,7 @@ function SignUpForm() {
             id="userName"
             name="userName"
             placeholder="Your User Name"
+            required
           />
         </label>
         <label htmlFor="email">
@@ -46,6 +47,7 @@ function SignUpForm() {
             id="email"
             name="email"
             placeholder="Your Email"
+            required
           />
         </label>
         <label htmlFor="password">
@@ -55,6 +57,7 @@ function SignUpForm() {
             id="password"
             name="password"
             placeholder="Your Password"
+            required
           />
         </label>
         <AuthButton type="sign up" loading={loading} />
