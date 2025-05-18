@@ -1,29 +1,19 @@
-// import Link from "next/link";
-// import LoginForm from "../../components/LoginForm";
-
-// export default function LoginPage() {
-//   return (
-//     <div>
-//       <h1>Sign in</h1>
-//       <LoginForm />
-//       <div>
-//         <h1>{`Don't have an account?`}</h1>
-//         <Link href="/register">Sign Up</Link>
-//       </div>
-//     </div>
-//   );
-// }
-import { login, signup } from "./actions";
+import Link from "next/link";
+import LoginForm from "../../components/LoginForm";
+import styles from "./page.module.scss";
 
 export default function LoginPage() {
   return (
-    <form>
-      <label htmlFor="email">Email:</label>
-      <input id="email" name="email" type="email" required />
-      <label htmlFor="password">Password:</label>
-      <input id="password" name="password" type="password" required />
-      <button formAction={login}>Log in</button>
-      <button formAction={signup}>Sign up</button>
-    </form>
+    <div className={styles.container}>
+      <div className={styles.formContainer}>
+        <h1 className={styles.login}>Login</h1>
+        <div className={styles.line}></div>
+        <LoginForm />
+        <div className={styles.message}>
+          {`Don't have an account? `}
+          <Link href="/register">Sign Up</Link>
+        </div>
+      </div>
+    </div>
   );
 }

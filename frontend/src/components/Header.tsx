@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import { Yellowtail } from "next/font/google";
 import Button from "./Button";
-import Logout from "./Logout";
 import Link from "next/link";
 import { createClient } from "../utils/supabase/client";
 
