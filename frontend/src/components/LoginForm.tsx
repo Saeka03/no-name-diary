@@ -99,8 +99,7 @@ function LoginForm() {
           )}
         </button>
       </div>
-      {/* <button formAction={login}>Log in</button> */}
-      <Button text="Login" onClick={login} className="action"></Button>
+      <button formAction={login}>Login</button>
     </form>
   );
 }

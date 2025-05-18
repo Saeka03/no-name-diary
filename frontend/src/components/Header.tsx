@@ -4,7 +4,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import { Yellowtail } from "next/font/google";
-import Button from "./Button";
 import Link from "next/link";
 import { createClient } from "../utils/supabase/client";
 
@@ -15,8 +14,11 @@ const yellowtail = Yellowtail({
 
 function Header() {
   const [isUser, setIsUser] = useState<boolean>(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+
     const fetchSupabase = async () => {
       const supabase = await createClient();
       const { data, error } = await supabase.auth.getUser();
@@ -28,6 +30,10 @@ function Header() {
     };
     fetchSupabase();
   }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   const logoutHandler = async () => {
     const supabase = await createClient();

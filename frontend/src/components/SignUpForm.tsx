@@ -99,7 +99,9 @@ function SignUpForm() {
           )}
         </button>
       </div>
-      <Button text="Sign Up" onClick={signup} className="action"></Button>
+      <button className={styles.signUpButton} formAction={signup}>
+        Sign Up
+      </button>
     </form>
   );
 }
