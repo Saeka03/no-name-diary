@@ -1,22 +1,40 @@
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import { Yellowtail } from "next/font/google";
-import { createClient } from "../utils/supabase/server";
 import Button from "./Button";
 import Logout from "./Logout";
 import Link from "next/link";
+import { createClient } from "../utils/supabase/client";
 
 const yellowtail = Yellowtail({
   subsets: ["latin"],
   weight: "400",
 });
 
-async function Header() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+function Header() {
+  const [isUser, setIsUser] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchSupabase = async () => {
+      const supabase = await createClient();
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data?.user) {
+        setIsUser(false);
+      } else {
+        setIsUser(true);
+      }
+    };
+    fetchSupabase();
+  }, []);
+
+  const logoutHandler = async () => {
+    const supabase = await createClient();
+    supabase.auth.signOut();
+    location.reload();
+  };
 
   return (
     <div className={styles.header}>
@@ -30,16 +48,12 @@ async function Header() {
       <h1 className={`${styles.title} ${yellowtail.className}`}>
         No Name Diary
       </h1>
-      {!user ? (
-        <Link href={"/login"}>
-          <Button className="action" text="Login" />
-        </Link>
+      {isUser ? (
+        <button onClick={logoutHandler}>Logout</button>
       ) : (
-        <div>
-          <div>{`Hi! ${user.user_metadata.username}`}</div>
-          <Logout />
-          {/* <Button className="action" text="Logout" onClick={logoutHandler} /> */}
-        </div>
+        <Link href="/login">
+          <button>Login</button>
+        </Link>
       )}
     </div>
   );
