@@ -1,13 +1,19 @@
-import { signup } from "../login/actions";
+import Link from "next/link";
+import SignUpForm from "../../components/SignUpForm";
+import styles from "./page.module.scss";
 
 export default function RegisterPage() {
   return (
-    <form>
-      <label htmlFor="email">Email:</label>
-      <input id="email" name="email" type="email" required />
-      <label htmlFor="password">Password:</label>
-      <input id="password" name="password" type="password" required />
-      <button formAction={signup}>Sign up</button>
-    </form>
+    <div className={styles.container}>
+      <div className={styles.formContainer}>
+        <h1 className={styles.signUp}>Sign Up</h1>
+        <div className={styles.line}></div>
+        <SignUpForm />
+        <div className={styles.message}>
+          {`Already have an account? `}
+          <Link href="/login">Login</Link>
+        </div>
+      </div>
+    </div>
   );
 }
