@@ -1,0 +1,93 @@
+@import "../app/variables.module.scss";
+
+.formContainer {
+  width: 90%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  .err {
+    color: $delete;
+  }
+
+  .emailInput {
+    width: 100%;
+    display: flex;
+    background-color: white;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid $gray-text;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    input {
+      width: 100%;
+      border: none;
+      padding-left: 4px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .passwordInput {
+    width: 100%;
+    display: flex;
+    background-color: white;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid $gray-text;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    input {
+      width: 100%;
+      border: none;
+      padding-left: 4px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    button {
+      height: 20px;
+      border: none;
+      cursor: pointer;
+      background-color: transparent;
+    }
+  }
+
+  .loginButton {
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid $primary;
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+    transition: transform 0.1s, box-shadow 0.1s;
+
+    background-color: $primary;
+    color: white;
+
+    &:active {
+      transform: translate(0.1rem, 0.1rem);
+      box-shadow: none;
+    }
+  }
+}
