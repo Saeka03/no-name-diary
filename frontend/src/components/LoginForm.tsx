@@ -6,10 +6,18 @@ import styles from "./LoginForm.module.scss";
 
 function LoginForm() {
   const [isOnPassword, setIsOnPassword] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
+  const [type, setType] = useState<string>("password");
 
-  const isOnPasswordHandler = (e: MouseEvent<HTMLButtonElement>) => {
+  const passwordToggle = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setIsOnPassword(!isOnPassword);
+    if (type === "password") {
+      setIsOnPassword(true);
+      setType("text");
+    } else {
+      setIsOnPassword(false);
+      setType("password");
+    }
   };
 
   return (
@@ -55,11 +63,13 @@ function LoginForm() {
         <input
           id="password"
           name="password"
-          type="password"
+          type={type}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
         />
-        <button onClick={isOnPasswordHandler}>
+        <button onClick={passwordToggle}>
           {isOnPassword ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +108,9 @@ function LoginForm() {
           )}
         </button>
       </div>
-      <button className={styles.loginButton} formAction={login}>Login</button>
+      <button className={styles.loginButton} formAction={login}>
+        Login
+      </button>
     </form>
   );
 }

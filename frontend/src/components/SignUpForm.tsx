@@ -1,16 +1,23 @@
 "use client";
 
 import React, { MouseEvent, useState } from "react";
-import Button from "./Button";
 import { signup } from "../app/login/actions";
 import styles from "./SignUpForm.module.scss";
 
 function SignUpForm() {
   const [isOnPassword, setIsOnPassword] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
+  const [type, setType] = useState<string>("password");
 
-  const isOnPasswordHandler = (e: MouseEvent<HTMLButtonElement>) => {
+  const passwordToggle = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setIsOnPassword(!isOnPassword);
+    if (type === "password") {
+      setIsOnPassword(true);
+      setType("text");
+    } else {
+      setIsOnPassword(false);
+      setType("password");
+    }
   };
 
   return (
@@ -56,11 +63,13 @@ function SignUpForm() {
         <input
           id="password"
           name="password"
-          type="password"
+          type={type}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
         />
-        <button onClick={isOnPasswordHandler}>
+        <button onClick={passwordToggle}>
           {isOnPassword ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
