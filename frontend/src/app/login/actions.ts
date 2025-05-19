@@ -10,19 +10,19 @@ export async function login(formData: FormData) {
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
-  const data = {
+  const credentials = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
   };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { error, data } = await supabase.auth.signInWithPassword(credentials);
 
   if (error) {
-    redirect("/error");
+    return { status: error.message, user: null };
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  return { status: "success", user: data.user };
 }
 
 export async function signup(formData: FormData) {
@@ -30,17 +30,17 @@ export async function signup(formData: FormData) {
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
-  const data = {
+  const credentials = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
   };
 
-  const { error } = await supabase.auth.signUp(data);
+  const { error, data } = await supabase.auth.signUp(credentials);
 
   if (error) {
-    redirect("/error");
+    return { status: error.message, user: null };
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  return { status: "success", user: data.user };
 }

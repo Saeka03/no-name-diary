@@ -1,13 +1,34 @@
 "use client";
 
-import React, { MouseEvent, useState } from "react";
+import React, { FormEvent, MouseEvent, useState } from "react";
 import { signup } from "../app/login/actions";
 import styles from "./SignUpForm.module.scss";
+import { useRouter } from "next/navigation";
 
 function SignUpForm() {
   const [isOnPassword, setIsOnPassword] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [type, setType] = useState<string>("password");
+  const [error, setError] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const router = useRouter();
+
+  const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsMounted(true);
+    setError(error);
+
+    const formData = new FormData(event.currentTarget);
+    const result = await signup(formData);
+
+    if (result.status === "success") {
+      router.push("/login");
+    } else {
+      setError(result.status);
+    }
+
+    setIsMounted(false);
+  };
 
   const passwordToggle = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -21,7 +42,8 @@ function SignUpForm() {
   };
 
   return (
-    <form className={styles.formContainer}>
+    <form className={styles.formContainer} onClick={submitHandler}>
+      {error && <p className={styles.err}>{error}</p>}
       <div className={styles.emailInput}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -108,9 +130,7 @@ function SignUpForm() {
           )}
         </button>
       </div>
-      <button className={styles.signUpButton} formAction={signup}>
-        Sign Up
-      </button>
+      <button className={styles.signUpButton}>Sign Up</button>
     </form>
   );
 }

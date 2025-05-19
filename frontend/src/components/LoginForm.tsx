@@ -1,13 +1,34 @@
 "use client";
 
-import React, { MouseEvent, useState } from "react";
+import React, { FormEvent, MouseEvent, useState } from "react";
 import { login } from "../app/login/actions";
 import styles from "./LoginForm.module.scss";
+import { useRouter } from "next/navigation";
 
 function LoginForm() {
   const [isOnPassword, setIsOnPassword] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [type, setType] = useState<string>("password");
+  const [error, setError] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const router = useRouter();
+
+  const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsMounted(true);
+    setError(error);
+
+    const formData = new FormData(event.currentTarget);
+    const result = await login(formData);
+
+    if (result.status === "success") {
+      router.push("/");
+    } else {
+      setError(result.status);
+    }
+
+    setIsMounted(false);
+  };
 
   const passwordToggle = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -21,7 +42,8 @@ function LoginForm() {
   };
 
   return (
-    <form className={styles.formContainer}>
+    <form className={styles.formContainer} onClick={submitHandler}>
+      {error && <p className={styles.err}>{error}</p>}
       <div className={styles.emailInput}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -108,9 +130,7 @@ function LoginForm() {
           )}
         </button>
       </div>
-      <button className={styles.loginButton} formAction={login}>
-        Login
-      </button>
+      <button className={styles.loginButton}>Login</button>
     </form>
   );
 }

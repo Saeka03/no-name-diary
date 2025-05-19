@@ -9,6 +9,10 @@
   align-items: center;
   gap: 20px;
 
+  .err {
+    color: $delete;
+  }
+
   .emailInput {
     width: 100%;
     display: flex;
