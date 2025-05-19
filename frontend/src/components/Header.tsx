@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import { Yellowtail } from "next/font/google";
-import Link from "next/link";
 import { createClient } from "../utils/supabase/client";
+import Button from "./Button";
+import { useRouter } from "next/navigation";
 
 const yellowtail = Yellowtail({
   subsets: ["latin"],
@@ -15,6 +15,7 @@ const yellowtail = Yellowtail({
 function Header() {
   const [isUser, setIsUser] = useState<boolean>(false);
   const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -41,24 +42,19 @@ function Header() {
     location.reload();
   };
 
+  const loginHandler = () => {
+    router.push("/login");
+  };
+
   return (
     <div className={styles.header}>
-      <Image
-        className={styles.img}
-        src={"/img-header.png"}
-        alt="Header image"
-        height={100}
-        width={2500}
-      />
       <h1 className={`${styles.title} ${yellowtail.className}`}>
         No Name Diary
       </h1>
       {isUser ? (
-        <button onClick={logoutHandler}>Logout</button>
+        <Button className="cancel" text="Logout" onClick={logoutHandler} />
       ) : (
-        <Link href="/login">
-          <button>Login</button>
-        </Link>
+        <Button className="action" text="Login" onClick={loginHandler} />
       )}
     </div>
   );

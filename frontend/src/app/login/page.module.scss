@@ -11,6 +11,24 @@
   justify-content: center;
   align-items: center;
   font-family: "Roboto", sans-serif;
+  position: relative;
+
+  .title {
+    font-family: "Yellowtail";
+    font-size: 3rem;
+    color: $primary;
+    position: absolute;
+    top: 1%;
+    left: 2%;
+
+    @include responsive("lg") {
+      font-size: 2rem;
+    }
+
+    @include responsive("xs") {
+      font-size: 1.2rem;
+    }
+  }
 
   .formContainer {
     padding: 30px;

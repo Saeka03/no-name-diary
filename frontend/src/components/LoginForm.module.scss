@@ -65,4 +65,25 @@
       background-color: transparent;
     }
   }
+
+  .loginButton {
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid $primary;
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+    transition: transform 0.1s, box-shadow 0.1s;
+
+    background-color: $primary;
+    color: white;
+
+    &:active {
+      transform: translate(0.1rem, 0.1rem);
+      box-shadow: none;
+    }
+  }
 }

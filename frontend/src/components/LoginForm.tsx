@@ -3,7 +3,6 @@
 import React, { MouseEvent, useState } from "react";
 import { login } from "../app/login/actions";
 import styles from "./LoginForm.module.scss";
-import Button from "./Button";
 
 function LoginForm() {
   const [isOnPassword, setIsOnPassword] = useState<boolean>(false);
@@ -99,7 +98,7 @@ function LoginForm() {
           )}
         </button>
       </div>
-      <button formAction={login}>Login</button>
+      <button className={styles.loginButton} formAction={login}>Login</button>
     </form>
   );
 }
