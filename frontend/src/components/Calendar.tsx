@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -9,14 +9,25 @@ import styles from "./Calendar.module.scss";
 import { useDiariesStore } from "../stores/diaryStore";
 import { useRouter } from "next/navigation";
 
-function Calendar() {
+function Calendar({ isUser }: { isUser: boolean }) {
   const diaries = useDiariesStore((state) => state.diaries);
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
   const router = useRouter();
+  const calendarRef = useRef(null);
 
   useEffect(() => {
     fetchDiaries();
   }, []);
+
+  useEffect(() => {
+    const calendarApi = calendarRef.current?.getApi();
+    if (!calendarApi) return;
+
+    // Force re-rendering by changing view twice
+    const currentView = calendarApi.view.type;
+    calendarApi.changeView("timeGridWeek");
+    calendarApi.changeView(currentView);
+  }, [isUser]);
 
   const clickEventHandler = (info) => {
     const eventId = info.event.id;
@@ -26,6 +37,7 @@ function Calendar() {
   return (
     <div className={styles.calendar}>
       <FullCalendar
+        ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         editable={false}
@@ -36,20 +48,22 @@ function Calendar() {
           end: "prev  today next",
         }}
         dayCellDidMount={(info) => {
-          // Create the "+" button
-          const plusButton = document.createElement("div");
-          plusButton.className = styles.plus;
-          plusButton.textContent = "+";
+          if (isUser) {
+            // Create the "+" button
+            const plusButton = document.createElement("div");
+            plusButton.className = styles.plus;
+            plusButton.textContent = "+";
 
-          // Add click event listener to the button
-          plusButton.addEventListener("click", () => {
-            router.push(`/diary/new-diary?query=${info.date}`);
-          });
+            // Add click event listener to the button
+            plusButton.addEventListener("click", () => {
+              router.push(`/diary/new-diary?query=${info.date}`);
+            });
 
-          // Append it to the day cell
-          const dayGridFrame = info.el.querySelector(".fc-daygrid-day-frame");
-          if (dayGridFrame) {
-            dayGridFrame.appendChild(plusButton);
+            // Append it to the day cell
+            const dayGridFrame = info.el.querySelector(".fc-daygrid-day-frame");
+            if (dayGridFrame) {
+              dayGridFrame.appendChild(plusButton);
+            }
           }
         }}
         events={diaries}
