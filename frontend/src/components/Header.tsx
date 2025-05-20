@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./Header.module.scss";
 import { Yellowtail } from "next/font/google";
 import { createClient } from "../utils/supabase/client";
@@ -12,29 +12,8 @@ const yellowtail = Yellowtail({
   weight: "400",
 });
 
-function Header() {
-  const [isUser, setIsUser] = useState<boolean>(false);
-  const [isMounted, setIsMounted] = useState(false);
+function Header({ isUser }: { isUser: boolean }) {
   const router = useRouter();
-
-  useEffect(() => {
-    setIsMounted(true);
-
-    const fetchSupabase = async () => {
-      const supabase = await createClient();
-      const { data, error } = await supabase.auth.getUser();
-      if (error || !data?.user) {
-        setIsUser(false);
-      } else {
-        setIsUser(true);
-      }
-    };
-    fetchSupabase();
-  }, []);
-
-  if (!isMounted) {
-    return null;
-  }
 
   const logoutHandler = async () => {
     const supabase = await createClient();
