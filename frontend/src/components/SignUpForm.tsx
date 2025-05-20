@@ -42,7 +42,7 @@ function SignUpForm() {
   };
 
   return (
-    <form className={styles.formContainer} onClick={submitHandler}>
+    <form className={styles.formContainer} onSubmit={submitHandler}>
       {error && <p className={styles.err}>{error}</p>}
       <div className={styles.emailInput}>
         <svg
