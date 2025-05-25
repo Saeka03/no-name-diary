@@ -3,7 +3,6 @@ import { prisma } from "../../../../lib/prisma";
 export async function GET(req: Request, context: any) {
   try {
     const { params } = context;
-
     const id = parseInt(params.id);
 
     const diary = await prisma.diary.findFirst({
@@ -20,7 +19,6 @@ export async function GET(req: Request, context: any) {
 export async function DELETE(req: Request, context: any) {
   try {
     const { params } = context;
-
     const id = parseInt(params.id);
 
     return await prisma.$transaction(async (tx) => {
@@ -44,13 +42,7 @@ export async function PATCH(req: Request, context: any) {
     const { params } = context;
     const id = parseInt(params.id);
     const body = await req.json();
-    if (
-      !body.title ||
-      !body.content ||
-      !body.like ||
-      !body.laugh ||
-      !body.cry
-    ) {
+    if (!body.title || !body.content) {
       return Response.json(
         { message: "Values are not found" },
         { status: 400 }
@@ -63,9 +55,6 @@ export async function PATCH(req: Request, context: any) {
         data: {
           title: body.title,
           content: body.content,
-          like: body.like,
-          laugh: body.laugh,
-          cry: body.cry,
         },
       });
 
