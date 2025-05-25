@@ -1,19 +1,42 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import { useRouter, useSearchParams } from "next/navigation";
 import DiaryInput from "../../../../components/DiaryInput";
 import { formatDate } from "../../../../utils/dateUtils";
+import { createClient } from "../../../../utils/supabase/client";
 
 function NewDiary() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const date = searchParams.get("query");
+  const [adminId, setAdminId] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+
+    const fetchSupabase = async () => {
+      const supabase = await createClient();
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data?.user) {
+        setAdminId(null);
+      } else {
+        setAdminId(data?.user.id);
+      }
+    };
+
+    fetchSupabase();
+  }, []);
 
   const handleClose = () => {
     router.back();
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className={styles.modalWrapper} onClick={handleClose}>
@@ -31,7 +54,11 @@ function NewDiary() {
             </div>
           </div>
           <div className={styles.line}></div>
-          <DiaryInput date={new Date(date)} handleClose={handleClose} />
+          <DiaryInput
+            date={new Date(date)}
+            handleClose={handleClose}
+            adminId={adminId}
+          />
         </div>
       </div>
     </div>

@@ -9,9 +9,10 @@ import { useRouter } from "next/navigation";
 type DiaryInputProps = {
   date: Date;
   handleClose: () => void;
+  adminId: string;
 };
 
-function DiaryInput({ date, handleClose }: DiaryInputProps) {
+function DiaryInput({ date, handleClose, adminId }: DiaryInputProps) {
   const [title, setTitle] = useState<string>("");
   const [diaryContent, setDiaryContent] = useState<string>("");
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
@@ -31,7 +32,7 @@ function DiaryInput({ date, handleClose }: DiaryInputProps) {
     }
 
     try {
-      await postDiary(date, title, diaryContent);
+      await postDiary(date, title, diaryContent, adminId);
       router.back();
       await fetchDiaries();
     } catch (error) {
