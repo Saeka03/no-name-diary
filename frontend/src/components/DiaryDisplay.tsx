@@ -10,9 +10,10 @@ import { useModalStore } from "../stores/modalStore";
 
 type DiaryDisplayProps = {
   diary: DiaryType;
+  adminId: string;
 };
 
-function DiaryDisplay({ diary }: DiaryDisplayProps) {
+function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
   const openModal = useModalStore((state) => state.openModal);
 
   return (
@@ -40,10 +41,14 @@ function DiaryDisplay({ diary }: DiaryDisplayProps) {
           <p>{diary && diary.cry}</p>
         </div>
       </div>
-      <div className={styles.edit}>
-        <Button text={"Delete"} className={"delete"} onClick={openModal} />
-        <Button text={"Save"} className={"action"} />
-      </div>
+      {diary?.adminId === adminId ? (
+        <div className={styles.edit}>
+          <Button text={"Delete"} className={"delete"} onClick={openModal} />
+          <Button text={"Save"} className={"action"} />
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

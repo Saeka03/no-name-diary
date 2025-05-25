@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import Button from "../../../../components/Button";
 import DiaryDisplay from "../../../../components/DiaryDisplay";
@@ -9,6 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useDiariesStore } from "../../../../stores/diaryStore";
 import { formatDate } from "../../../../utils/dateUtils";
 import { useCommentsStore } from "../../../../stores/commentStore";
+import { createClient } from "../../../../utils/supabase/client";
 
 function Diary() {
   const params = useParams<{ id: string }>();
@@ -17,8 +18,23 @@ function Diary() {
   const fetchDiary = useDiariesStore((state) => state.fetchDiary);
   const diary = useDiariesStore((state) => state.diary);
   const clearComments = useCommentsStore((state) => state.clearComments);
+  const [adminId, setAdminId] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+
+    const fetchSupabase = async () => {
+      const supabase = await createClient();
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data?.user) {
+        setAdminId(null);
+      } else {
+        setAdminId(data?.user.id);
+      }
+    };
+
+    fetchSupabase();
     fetchDiary(params.id);
   }, []);
 
@@ -27,6 +43,10 @@ function Diary() {
     clearDiary();
     clearComments();
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className={styles.wrapper} onClick={handleClose}>
@@ -46,7 +66,7 @@ function Diary() {
             </div>
           </div>
           <div className={styles.line}></div>
-          <DiaryDisplay diary={diary} />
+          <DiaryDisplay diary={diary} adminId={adminId} />
           <CommentDisplay diaryId={Number(params.id)} />
         </div>
       </div>
