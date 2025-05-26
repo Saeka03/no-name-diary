@@ -37,7 +37,7 @@ export async function DELETE(req: Request, context: any) {
   }
 }
 
-export async function PATCH(req: Request, context: any) {
+export async function PUT(req: Request, context: any) {
   try {
     const { params } = context;
     const id = parseInt(params.id);

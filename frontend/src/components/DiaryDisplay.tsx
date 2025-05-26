@@ -17,9 +17,9 @@ type DiaryDisplayProps = {
 };
 
 function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
-  const [title, setTitle] = useState<string>("");
+  const [title, setTitle] = useState<string>(diary?.title);
+  const [diaryContent, setDiaryContent] = useState<string>(diary?.content);
   const openModal = useModalStore((state) => state.openModal);
-  const [diaryContent, setDiaryContent] = useState<string>("");
   const editDiary = useDiariesStore((state) => state.editDiary);
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
   const clearDiary = useDiariesStore((state) => state.clearDiary);
@@ -39,7 +39,13 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
     }
 
     try {
-      await editDiary(diary.id, title, diaryContent);
+      if (title === undefined) {
+        await editDiary(diary.id, diary.title, diaryContent);
+      } else if (diaryContent === undefined) {
+        await editDiary(diary.id, title, diary.content);
+      } else {
+        await editDiary(diary.id, title, diaryContent);
+      }
       router.back();
       clearDiary();
       clearComments();
@@ -62,7 +68,9 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
           placeholder="Title"
           defaultValue={diary.title}
           onChange={(e) => setTitle(e.target.value)}
-        ></input>
+        >
+          {}
+        </input>
       ) : (
         <h1>{diary && diary.title}</h1>
       )}

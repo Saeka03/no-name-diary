@@ -146,7 +146,7 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`,
         {
-          method: "PATCH",
+          method: "PUT",
           body: JSON.stringify({ title, content }),
         }
       );
