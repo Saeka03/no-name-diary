@@ -1,5 +1,5 @@
-@import "../../../variables.module.scss";
-@import "../../../mixin.scss";
+@use "../../../variables.module.scss";
+@use "../../../mixin.scss";
 
 .wrapper {
   position: fixed;
@@ -17,16 +17,16 @@
     height: 90%;
     max-width: 600px;
     min-width: 350px;
-    background-color: $blue-background;
+    background-color: variables.$blue-background;
     z-index: 2;
     border-radius: 10px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
 
-    @include responsive("sm") {
+    @include mixin.responsive("sm") {
       width: 90%;
     }
 
-    @include responsive("md") {
+    @include mixin.responsive("md") {
       width: 80%;
     }
 
@@ -48,7 +48,7 @@
           gap: 1rem;
 
           .closeButton {
-            color: $primary;
+            color: variables.$primary;
             border: none;
             background-color: transparent;
             font-size: 2rem;
@@ -59,7 +59,7 @@
 
       .line {
         width: 100%;
-        border-bottom: 1px solid $gray-text;
+        border-bottom: 1px solid variables.$gray-text;
         margin: 10px 0;
       }
     }

@@ -1,4 +1,4 @@
-@import "../app/variables.module.scss";
+@use "../app/variables.module.scss";
 
 .display {
   height: 100%;
@@ -16,10 +16,10 @@
     min-width: 250px;
     height: 20%;
     max-width: 300px;
-    background-color: $blue-background;
+    background-color: variables.$blue-background;
     z-index: 4;
     border-radius: 10px;
-    border: 1px solid $gray-text;
+    border: 1px solid variables.$gray-text;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -29,7 +29,7 @@
     position: relative;
 
     .closeButton {
-      color: $primary;
+      color: variables.$primary;
       border: none;
       background-color: transparent;
       font-size: 1.5rem;

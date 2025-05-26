@@ -1,8 +1,8 @@
-@import "../app/variables.module.scss";
+@use "../app/variables.module.scss";
 
 .line {
   width: 100%;
-  border-bottom: 1px solid $gray-text;
+  border-bottom: 1px solid variables.$gray-text;
   margin: 10px 0;
 }
 

@@ -1,5 +1,5 @@
-@import "../variables.module.scss";
-@import "../mixin.scss";
+@use "../variables.module.scss";
+@use "../mixin.scss";
 
 .container {
   background-image: url("/img-background.jpg");
@@ -16,16 +16,16 @@
   .title {
     font-family: "Yellowtail";
     font-size: 3rem;
-    color: $primary;
+    color: variables.$primary;
     position: absolute;
     top: 1%;
     left: 2%;
 
-    @include responsive("lg") {
+    @include mixin.responsive("lg") {
       font-size: 2rem;
     }
 
-    @include responsive("xs") {
+    @include mixin.responsive("xs") {
       font-size: 1.2rem;
     }
   }
@@ -34,8 +34,8 @@
     padding: 30px;
     width: 50%;
     height: 60%;
-    border: 1px solid $gray-text;
-    background-color: $purple-background;
+    border: 1px solid variables.$gray-text;
+    background-color: variables.$purple-background;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     display: flex;
@@ -43,21 +43,21 @@
     justify-content: center;
     align-items: center;
 
-    @include responsive("xl") {
+    @include mixin.responsive("xl") {
       max-width: 350px;
     }
 
-    @include responsive("sm") {
+    @include mixin.responsive("sm") {
       min-width: 300px;
     }
 
     .login {
-      color: $primary;
+      color: variables.$primary;
     }
 
     .line {
       width: 100%;
-      border-bottom: 1px solid $gray-text;
+      border-bottom: 1px solid variables.$gray-text;
       margin: 10px 0;
     }
 

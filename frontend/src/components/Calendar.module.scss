@@ -1,5 +1,5 @@
-@import "../app/variables.module.scss";
-@import "../app/mixin.scss";
+@use "../app/variables.module.scss";
+@use "../app/mixin.scss";
 
 .calendar {
   width: 80%;
@@ -8,15 +8,15 @@
   margin: 0;
   padding: 1rem 2rem;
   background-color: white;
-  color: $gray-text;
+  color: variables.$gray-text;
   font-family: "Poppins", sans-serif;
   position: relative;
 
-  @include responsive("xs") {
+  @include mixin.responsive("xs") {
     min-width: 390px;
   }
 
-  @include responsive("lg") {
+  @include mixin.responsive("lg") {
     width: 100%;
   }
 
@@ -25,7 +25,7 @@
     background-color: transparent;
     border: none;
     box-shadow: none;
-    color: $gray-text;
+    color: variables.$gray-text;
     font-size: 1.25rem;
     padding: 0;
     margin: 0;
@@ -40,15 +40,15 @@
     }
 
     &:hover {
-      color: $gray-text-hover;
+      color: variables.$gray-text-hover;
     }
 
     &:active {
-      color: $gray-text !important;
+      color: variables.$gray-text !important;
     }
 
     &:disabled {
-      color: $gray-text;
+      color: variables.$gray-text;
     }
   }
 
@@ -66,7 +66,7 @@
       border-radius: 50%;
       top: 3px;
       right: 0;
-      background-color: $primary;
+      background-color: variables.$primary;
     }
   }
 
@@ -86,9 +86,9 @@
 
       font-weight: 900;
       font-size: 1.2rem;
-      color: $primary;
+      color: variables.$primary;
       border-radius: 50%;
-      border: 1px solid $primary;
+      border: 1px solid variables.$primary;
       box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
       opacity: 0;
 
@@ -109,8 +109,8 @@
 
   :global(.fc-event) {
     padding: 0.1rem 0.05rem;
-    background-color: $purple-background;
-    border: 1px solid $primary;
+    background-color: variables.$purple-background;
+    border: 1px solid variables.$primary;
     border-radius: 4px;
     box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
     cursor: pointer;
@@ -122,7 +122,7 @@
   }
 
   :global(.fc-event-title) {
-    color: $primary;
+    color: variables.$primary;
     font-size: 0.8rem;
     font-weight: bold;
     text-overflow: ellipsis;
