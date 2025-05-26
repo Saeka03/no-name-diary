@@ -3,7 +3,7 @@ import { prisma } from "../../../../lib/prisma";
 export async function GET(req: Request, context: any) {
   try {
     const { params } = context;
-    const id = parseInt(params.id);
+    const id = parseInt((await params).id);
 
     const diary = await prisma.diary.findFirst({
       where: { id },
@@ -19,7 +19,7 @@ export async function GET(req: Request, context: any) {
 export async function DELETE(req: Request, context: any) {
   try {
     const { params } = context;
-    const id = parseInt(params.id);
+    const id = parseInt((await params).id);
 
     return await prisma.$transaction(async (tx) => {
       await tx.comment.deleteMany({
@@ -40,7 +40,7 @@ export async function DELETE(req: Request, context: any) {
 export async function PUT(req: Request, context: any) {
   try {
     const { params } = context;
-    const id = parseInt(params.id);
+    const id = parseInt((await params).id);
     const body = await req.json();
     if (!body.title || !body.content) {
       return Response.json(
@@ -68,7 +68,7 @@ export async function PUT(req: Request, context: any) {
 export async function PATCH(req: Request, context: any) {
   try {
     const { params } = context;
-    const id = parseInt(params.id);
+    const id = parseInt((await params).id);
     const body = await req.json();
     if (!body.type) {
       return Response.json(

@@ -3,7 +3,7 @@ import { prisma } from "../../../../../../lib/prisma";
 export async function DELETE(req: Request, context: any) {
   try {
     const { params } = context;
-    const commentId = parseInt(params.commentId);
+    const commentId = parseInt((await params).commentId);
 
     const deletedComment = await prisma.comment.delete({
       where: { id: commentId },
