@@ -1,9 +1,15 @@
 @import "../app/variables.module.scss";
 
+.commentDisplay {
+  overflow-y: scroll;
+  height: 120px;
+  margin-top: 10px;
+}
+
 .line {
   width: 100%;
   border-bottom: 1px solid $gray-text;
-  margin: 1rem 0;
+  margin: 10px 0;
 }
 
 .commentsHeader {
@@ -33,9 +39,8 @@
 
 .leaveCommentsWrapper {
   display: grid;
-  align-items: end;
   height: 100%;
-  margin-bottom: 2rem;
+  margin-top: 10px;
 
   .leaveComments {
     display: flex;

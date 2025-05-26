@@ -3,7 +3,7 @@
 .title {
   padding: 0.25rem;
   background-color: transparent;
-  font-size: 2rem;
+  font-size: 18px;
   font-weight: bold;
   border: none;
 }
@@ -11,13 +11,13 @@
 .line {
   width: 100%;
   border-bottom: 1px solid $gray-text;
-  margin: 1rem 0;
+  margin: 10px 0;
 }
 
 .inputContents {
   margin-bottom: 1rem;
   padding: 0.5rem;
-  height: 8rem;
+  min-height: 80px;
   font-size: 1rem;
   background-color: transparent;
   border: none;

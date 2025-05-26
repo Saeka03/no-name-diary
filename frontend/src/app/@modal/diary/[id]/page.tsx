@@ -67,7 +67,9 @@ function Diary() {
           </div>
           <div className={styles.line}></div>
           <DiaryDisplay diary={diary} adminId={adminId} />
-          <CommentDisplay diaryId={Number(params.id)} />
+          <div className={styles.commentArea}>
+            <CommentDisplay diaryId={Number(params.id)} />
+          </div>
         </div>
       </div>
     </div>
