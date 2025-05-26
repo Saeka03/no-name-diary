@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import styles from "./DiaryDisplay.module.scss";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegFaceLaughSquint } from "react-icons/fa6";
@@ -24,6 +24,8 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
   const fetchDiaries = useDiariesStore((state) => state.fetchDiaries);
   const clearDiary = useDiariesStore((state) => state.clearDiary);
   const clearComments = useCommentsStore((state) => state.clearComments);
+  const incrementReaction = useDiariesStore((state) => state.incrementReaction);
+  const fetchDiary = useDiariesStore((state) => state.fetchDiary);
   const router = useRouter();
 
   const editDiaryHandler = async () => {
@@ -59,6 +61,23 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
     }
   };
 
+  const reactionHandler = async (
+    e: MouseEvent<HTMLButtonElement>,
+    type: string
+  ) => {
+    e.preventDefault();
+    try {
+      await incrementReaction(diary.id, type);
+      await fetchDiary(diary.id);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(`${error.message}`);
+      } else {
+        alert("Failed to increment the reaction.");
+      }
+    }
+  };
+
   return (
     <>
       {diary?.adminId === adminId ? (
@@ -87,19 +106,28 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
       )}
       <div className={styles.reactions}>
         <div className={styles.reactionItems}>
-          <button className={styles.reaction}>
+          <button
+            className={styles.reaction}
+            onClick={(e) => reactionHandler(e, "like")}
+          >
             <AiOutlineLike />
           </button>
           <p>{diary && diary.like}</p>
         </div>
         <div className={styles.reactionItems}>
-          <button className={styles.reaction}>
+          <button
+            className={styles.reaction}
+            onClick={(e) => reactionHandler(e, "laugh")}
+          >
             <FaRegFaceLaughSquint />
           </button>
           <p>{diary && diary.laugh}</p>
         </div>
         <div className={styles.reactionItems}>
-          <button className={styles.reaction}>
+          <button
+            className={styles.reaction}
+            onClick={(e) => reactionHandler(e, "cry")}
+          >
             <FaRegFaceSadCry />
           </button>
           <p>{diary && diary.cry}</p>

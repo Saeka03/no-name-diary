@@ -34,6 +34,7 @@ interface DiariesState {
   getDiary: (id: string) => Promise<void>;
   deleteDiary: (id: string) => Promise<void>;
   editDiary: (id, title, content) => Promise<void>;
+  incrementReaction: (id, type) => Promise<void>;
   clearDiary: () => void;
 }
 
@@ -148,6 +149,24 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
         {
           method: "PUT",
           body: JSON.stringify({ title, content }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  incrementReaction: async (id, type) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ type }),
         }
       );
       if (!response.ok) {
