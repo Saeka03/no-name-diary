@@ -14,10 +14,10 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const body = await req.json();
-  if (!body.dateTime || !body.title || !body.content) {
+  if (!body.dateTime || !body.title || !body.content || !body.adminId) {
     return Response.json({ message: "Values are not found" }, { status: 400 });
   }
-  
+
   try {
     const diary = await prisma.diary.create({
       data: {
@@ -27,6 +27,7 @@ export async function POST(req: Request) {
         like: 0,
         laugh: 0,
         cry: 0,
+        adminId: body.adminId,
       },
     });
 

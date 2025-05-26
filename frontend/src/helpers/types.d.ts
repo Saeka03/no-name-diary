@@ -7,6 +7,7 @@ type DiaryType = {
   laugh: number;
   cry: number;
   comment: CommentType[];
+  adminId: string;
 };
 
 type CommentType = {

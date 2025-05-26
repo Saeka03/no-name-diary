@@ -3,7 +3,7 @@ import { prisma } from "../../../../../lib/prisma";
 export async function GET(req: Request, context: any) {
   try {
     const { params } = context;
-    const diaryId = parseInt(params.id);
+    const diaryId = parseInt((await params).id);
 
     const comments = await prisma.comment.findMany({
       where: { diaryId },
@@ -24,7 +24,7 @@ export async function POST(req: Request, context: any) {
 
   try {
     const { params } = context;
-    const diaryId = parseInt(params.id);
+    const diaryId = parseInt((await params).id);
 
     const comment = await prisma.comment.create({
       data: {

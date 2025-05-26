@@ -1,10 +1,10 @@
-@import "../app/variables.module.scss";
+@use "../app/variables.module.scss";
 
 .button {
   position: relative;
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  border: 1px solid $primary;
+  border: 1px solid variables.$primary;
   background-color: transparent;
   font-weight: bold;
   font-size: 1rem;
@@ -19,17 +19,17 @@
 }
 
 .action {
-  background-color: $primary;
+  background-color: variables.$primary;
   color: white;
 }
 
 .cancel {
   background-color: white;
-  color: $primary;
+  color: variables.$primary;
 }
 
 .delete {
-  background-color: $delete;
+  background-color: variables.$delete;
   color: white;
   border: none;
 }

@@ -1,4 +1,4 @@
-@import "../app/variables.module.scss";
+@use "../app/variables.module.scss";
 
 .formContainer {
   width: 90%;
@@ -10,7 +10,7 @@
   gap: 20px;
 
   .err {
-    color: $delete;
+    color: variables.$delete;
   }
 
   .emailInput {
@@ -19,7 +19,7 @@
     background-color: white;
     padding: 6px;
     border-radius: 5px;
-    border: 1px solid $gray-text;
+    border: 1px solid variables.$gray-text;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 
     svg {
@@ -44,7 +44,7 @@
     background-color: white;
     padding: 6px;
     border-radius: 5px;
-    border: 1px solid $gray-text;
+    border: 1px solid variables.$gray-text;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 
     svg {
@@ -74,7 +74,7 @@
     position: relative;
     padding: 0.5rem 1rem;
     border-radius: 5px;
-    border: 1px solid $primary;
+    border: 1px solid variables.$primary;
     background-color: transparent;
     font-weight: bold;
     font-size: 1rem;
@@ -82,7 +82,7 @@
     box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
     transition: transform 0.1s, box-shadow 0.1s;
 
-    background-color: $primary;
+    background-color: variables.$primary;
     color: white;
 
     &:active {

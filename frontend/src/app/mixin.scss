@@ -1,5 +1,8 @@
+@use "sass:map";
+@use "sass:meta";
+@use "./variables.module.scss" as vars;
 @mixin responsive($size) {
-  $query: inspect(map-get($breakpoints, $size));
+  $query: meta.inspect(map.get(vars.$breakpoints, $size));
 
   @media #{$query} {
     @content;

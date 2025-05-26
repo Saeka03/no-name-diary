@@ -52,34 +52,40 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
 
   return (
     <>
-      {comments &&
-        comments.map((comment) => {
-          const commentDateTime =
-            formatDate(new Date(comment.date)) +
-            " " +
-            formatTime(new Date(comment.date));
+      {comments?.length > 0 ? (
+        <div className={styles.commentDisplay}>
+          {comments &&
+            comments.map((comment) => {
+              const commentDateTime =
+                formatDate(new Date(comment.date)) +
+                " " +
+                formatTime(new Date(comment.date));
 
-          return (
-            <div key={comment.id}>
-              <div className={styles.line}></div>
-              <div className={styles.comments}>
-                <div className={styles.commentsHeader}>
-                  <h4>No Name</h4>
-                  <p>{commentDateTime}</p>
+              return (
+                <div key={comment.id}>
+                  <div className={styles.line}></div>
+                  <div className={styles.comments}>
+                    <div className={styles.commentsHeader}>
+                      <h4>No Name</h4>
+                      <p>{commentDateTime}</p>
+                    </div>
+                    <div className={styles.commentsContents}>
+                      <p>{comment.content}</p>
+                      <button
+                        className={styles.bin}
+                        onClick={() => commentDeleteHandler(comment.id)}
+                      >
+                        <IoTrashOutline />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className={styles.commentsContents}>
-                  <p>{comment.content}</p>
-                  <button
-                    className={styles.bin}
-                    onClick={() => commentDeleteHandler(comment.id)}
-                  >
-                    <IoTrashOutline />
-                  </button>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+              );
+            })}
+        </div>
+      ) : (
+        <></>
+      )}
       <div className={styles.leaveCommentsWrapper}>
         <div className={styles.leaveComments}>
           <textarea

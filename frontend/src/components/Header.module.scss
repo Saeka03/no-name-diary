@@ -1,5 +1,5 @@
-@import "../app/variables.module.scss";
-@import "../app/mixin.scss";
+@use "../app/variables.module.scss";
+@use "../app/mixin.scss";
 
 .header {
   width: 100%;
@@ -17,13 +17,13 @@
   .title {
     font-family: "Yellowtail";
     font-size: 3rem;
-    color: $primary;
+    color: variables.$primary;
 
-    @include responsive("lg") {
+    @include mixin.responsive("lg") {
       font-size: 2rem;
     }
 
-    @include responsive("xs") {
+    @include mixin.responsive("xs") {
       font-size: 1.2rem;
     }
   }

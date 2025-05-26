@@ -1,15 +1,15 @@
-@import "../app/variables.module.scss";
+@use "../app/variables.module.scss";
 
 .line {
   width: 100%;
-  border-bottom: 1px solid $gray-text;
-  margin: 1rem 0;
+  border-bottom: 1px solid variables.$gray-text;
+  margin: 10px 0;
 }
 
 .title {
   padding: 0.25rem;
   background-color: transparent;
-  font-size: 2rem;
+  font-size: 18px;
   font-weight: bold;
   border: none;
 }

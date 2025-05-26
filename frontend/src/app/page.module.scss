@@ -1,5 +1,5 @@
-@import "./variables.module.scss";
-@import "./mixin.scss";
+@use "variables.module.scss";
+@use "mixin.scss";
 
 .page {
   width: 100%;
@@ -8,10 +8,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: $gray-background;
+  background-color: variables.$gray-background;
   overflow: hidden;
 
-  @include responsive("xl") {
+  @include mixin.responsive("xl") {
     justify-content: center;
   }
 }

@@ -10,6 +10,7 @@ interface DiariesState {
     laugh: number;
     cry: number;
     comment: CommentType[];
+    adminId: string;
   }[];
   diary: {
     id: string;
@@ -20,12 +21,20 @@ interface DiariesState {
     laugh: number;
     cry: number;
     comment: CommentType[];
+    adminId: string;
   } | null;
   fetchDiaries: () => Promise<void>;
   fetchDiary: (id: string) => Promise<void>;
-  postDiary: (dateTime: Date, title: string, content: string) => Promise<void>;
+  postDiary: (
+    dateTime: Date,
+    title: string,
+    content: string,
+    adminId: string
+  ) => Promise<void>;
   getDiary: (id: string) => Promise<void>;
   deleteDiary: (id: string) => Promise<void>;
+  editDiary: (id, title, content) => Promise<void>;
+  incrementReaction: (id, type) => Promise<void>;
   clearDiary: () => void;
 }
 
@@ -51,6 +60,7 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
           laugh: diary.laugh,
           cry: diary.cry,
           comment: diary.comment,
+          adminId: diary.adminId,
         })),
       });
     } catch (error) {
@@ -76,19 +86,20 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
           laugh: data.diary.laugh,
           cry: data.diary.cry,
           comment: data.diary.comment,
+          adminId: data.diary.adminId,
         },
       });
     } catch (error) {
       console.error(error);
     }
   },
-  postDiary: async (dateTime, title, content) => {
+  postDiary: async (dateTime, title, content, adminId) => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries`,
         {
           method: "POST",
-          body: JSON.stringify({ dateTime, title, content }),
+          body: JSON.stringify({ dateTime, title, content, adminId }),
         }
       );
       if (!response.ok) {
@@ -120,6 +131,42 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
         `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`,
         {
           method: "DELETE",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  editDiary: async (id, title, content) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({ title, content }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  incrementReaction: async (id, type) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ type }),
         }
       );
       if (!response.ok) {
