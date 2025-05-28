@@ -10,6 +10,8 @@ import { useModalStore } from "../stores/modalStore";
 import { useDiariesStore } from "../stores/diaryStore";
 import { useRouter } from "next/navigation";
 import { useCommentsStore } from "../stores/commentStore";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 type DiaryDisplayProps = {
   diary: DiaryType;
@@ -91,7 +93,7 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
           {}
         </input>
       ) : (
-        <h1>{diary && diary.title}</h1>
+        <h1>{(diary && diary.title) || <Skeleton />}</h1>
       )}
       <div className={styles.line}></div>
       {diary?.adminId === adminId ? (
@@ -102,7 +104,9 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
           onChange={(e) => setDiaryContent(e.target.value)}
         ></textarea>
       ) : (
-        <div className={styles.contents}>{diary && diary.content}</div>
+        <div className={styles.contents}>
+          {(diary && diary.content) || <Skeleton count={4} />}
+        </div>
       )}
       <div className={styles.reactions}>
         <div className={styles.reactionItems}>
@@ -112,7 +116,7 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
           >
             <AiOutlineLike />
           </button>
-          <p>{diary && diary.like}</p>
+          <p>{(diary && diary.like) || 0}</p>
         </div>
         <div className={styles.reactionItems}>
           <button
@@ -121,7 +125,7 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
           >
             <FaRegFaceLaughSquint />
           </button>
-          <p>{diary && diary.laugh}</p>
+          <p>{(diary && diary.laugh) || 0}</p>
         </div>
         <div className={styles.reactionItems}>
           <button
@@ -130,7 +134,7 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
           >
             <FaRegFaceSadCry />
           </button>
-          <p>{diary && diary.cry}</p>
+          <p>{(diary && diary.cry) || 0}</p>
         </div>
       </div>
       {diary?.adminId === adminId ? (
