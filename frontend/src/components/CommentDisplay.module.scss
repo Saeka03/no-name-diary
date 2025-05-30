@@ -3,40 +3,42 @@
 .commentWrapper {
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   .commentDisplay {
-    overflow-y: scroll;
-    max-height: 120px;
+    flex-grow: 1;
+    overflow-y: auto;
+    height: 120px;
     margin-top: 10px;
-  }
 
-  .line {
-    width: 100%;
-    border-bottom: 1px solid variables.$gray-text;
-    margin: 10px 0;
-  }
+    .line {
+      width: 100%;
+      border-bottom: 1px solid variables.$gray-text;
+      margin: 10px 0;
+    }
 
-  .commentsHeader {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 0.5rem;
-  }
+    .commentsHeader {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 0.5rem;
+    }
 
-  .commentsContents {
-    display: flex;
-    justify-content: space-between;
+    .commentsContents {
+      display: flex;
+      justify-content: space-between;
 
-    .bin {
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
+      .bin {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
 
-      svg {
-        font-size: 1.25rem;
-      }
+        svg {
+          font-size: 1.25rem;
+        }
 
-      &:active {
-        transform: translate(0.1rem, 0.1rem);
+        &:active {
+          transform: translate(0.1rem, 0.1rem);
+        }
       }
     }
   }
@@ -44,7 +46,7 @@
   .leaveCommentsWrapper {
     display: flex;
     max-height: 400px;
-    margin-top: 10px;
+    margin-top: auto;
 
     .leaveComments {
       display: flex;
