@@ -6,6 +6,7 @@ import { formatDate, formatTime } from "../utils/dateUtils";
 import { IoTrashOutline } from "react-icons/io5";
 import Button from "./Button";
 import { useCommentsStore } from "../stores/commentStore";
+import CardSkeleton from "./CardSkeleton";
 
 type CommentDisplayProps = {
   diaryId: number;
@@ -17,9 +18,11 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
   const fetchComments = useCommentsStore((state) => state.fetchComments);
   const postComment = useCommentsStore((state) => state.postComment);
   const deleteComment = useCommentsStore((state) => state.deleteComment);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetchComments(diaryId);
+    setIsLoading(false);
   }, []);
 
   const addCommentHandler = async () => {
@@ -51,7 +54,8 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
   };
 
   return (
-    <>
+    <div className={styles.commentWrapper}>
+      {isLoading && <CardSkeleton cards={2} />}
       {comments?.length > 0 ? (
         <div className={styles.commentDisplay}>
           {comments &&
@@ -104,7 +108,7 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

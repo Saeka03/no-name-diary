@@ -19,7 +19,8 @@ function Diary() {
   const diary = useDiariesStore((state) => state.diary);
   const clearComments = useCommentsStore((state) => state.clearComments);
   const [adminId, setAdminId] = useState(null);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [onEdit, setOnEdit] = useState<boolean>(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -55,18 +56,27 @@ function Diary() {
           <div className={styles.header}>
             <p>{diary && formatDate(new Date(diary.date))}</p>
             <div className={styles.buttons}>
-              <Button
-                text={"See translation"}
-                className={"cancel"}
-                disabled={true}
-              />
+              {onEdit ? (
+                <Button
+                  text={"No Edit"}
+                  className={"cancel"}
+                  onClick={() => setOnEdit(!onEdit)}
+                />
+              ) : (
+                <Button
+                  text={"Edit"}
+                  className={"action"}
+                  onClick={() => setOnEdit(!onEdit)}
+                />
+              )}
+
               <button className={styles.closeButton} onClick={handleClose}>
                 ×
               </button>
             </div>
           </div>
           <div className={styles.line}></div>
-          <DiaryDisplay diary={diary} adminId={adminId} />
+          <DiaryDisplay diary={diary} adminId={adminId} onEdit={onEdit} />
           <CommentDisplay diaryId={Number(params.id)} />
         </div>
       </div>
