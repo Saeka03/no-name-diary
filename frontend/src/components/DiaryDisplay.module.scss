@@ -2,10 +2,10 @@
 
 .title {
   padding: 0.25rem;
-  background-color: transparent;
+  background-color: white;
   font-size: 18px;
   font-weight: bold;
-  border: none;
+  border-radius: 4px;
 }
 
 .line {
@@ -19,8 +19,7 @@
   padding: 0.5rem;
   min-height: 80px;
   font-size: 1rem;
-  background-color: transparent;
-  border: none;
+  border-radius: 4px;
 }
 
 .contents {

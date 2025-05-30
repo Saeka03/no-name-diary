@@ -16,9 +16,10 @@ import "react-loading-skeleton/dist/skeleton.css";
 type DiaryDisplayProps = {
   diary: DiaryType;
   adminId: string;
+  onEdit: boolean;
 };
 
-function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
+function DiaryDisplay({ diary, adminId, onEdit }: DiaryDisplayProps) {
   const [title, setTitle] = useState<string>(diary?.title);
   const [diaryContent, setDiaryContent] = useState<string>(diary?.content);
   const openModal = useModalStore((state) => state.openModal);
@@ -82,7 +83,7 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
 
   return (
     <>
-      {diary?.adminId === adminId ? (
+      {diary?.adminId === adminId && onEdit ? (
         <input
           className={styles.title}
           type="text"
@@ -93,10 +94,10 @@ function DiaryDisplay({ diary, adminId }: DiaryDisplayProps) {
           {}
         </input>
       ) : (
-        <h1>{(diary && diary.title) || <Skeleton />}</h1>
+        <h2>{(diary && diary.title) || <Skeleton />}</h2>
       )}
       <div className={styles.line}></div>
-      {diary?.adminId === adminId ? (
+      {diary?.adminId === adminId && onEdit ? (
         <textarea
           className={styles.inputContents}
           defaultValue={diary.content}
