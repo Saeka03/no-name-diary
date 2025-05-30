@@ -1,0 +1,11 @@
+@use "../app/variables.module.scss";
+
+.line {
+  width: 100%;
+  border-bottom: 1px solid variables.$gray-text;
+  margin: 10px 0;
+}
+
+.headSkeleton {
+  width: 50%;
+}
