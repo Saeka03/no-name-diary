@@ -2,26 +2,33 @@
 @use "../app/mixin.scss";
 
 .header {
+  height: 100%;
   width: 100%;
-  min-height: 100px;
-  max-height: 150px;
   padding: 20px;
-  background-image: url("/img-header.png");
+  max-width: 200px;
+  background-image: url("/img-header-side.png");
   background-repeat: no-repeat;
+  object-fit: cover;
   background-size: 100% 100%;
 
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
+  @include mixin.responsive("lg") {
+    width: 100%;
+    min-height: 100px;
+    max-height: 150px;
+    max-width: none;
+    background-image: url("/img-header.png");
+    flex-direction: row;
+  }
+
   .title {
     font-family: "Yellowtail";
-    font-size: 3rem;
+    font-size: 28px;
     color: variables.$primary;
-
-    @include mixin.responsive("lg") {
-      font-size: 2rem;
-    }
 
     @include mixin.responsive("xs") {
       font-size: 1.2rem;

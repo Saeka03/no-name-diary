@@ -5,11 +5,15 @@
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   background-color: variables.$gray-background;
   overflow: hidden;
+
+  @include mixin.responsive("lg") {
+    flex-direction: column;
+  }
 
   @include mixin.responsive("xl") {
     justify-content: center;
