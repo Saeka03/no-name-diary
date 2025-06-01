@@ -46,7 +46,7 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
 
   const commentDeleteHandler = async (commentId: number) => {
     try {
-      await deleteComment(diaryId, commentId);
+      await deleteComment(commentId);
       fetchComments(diaryId);
     } catch (error) {
       console.error(error);

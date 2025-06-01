@@ -19,6 +19,11 @@
     max-width: 650px;
   }
 
+  :global(.fc) {
+    width: 100%;
+    height: 100%;
+  }
+
   :global(.fc-button),
   :global(.fc-today-button.fc-button.fc-button-primary) {
     background-color: transparent;
