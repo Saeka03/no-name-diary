@@ -216,6 +216,7 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
             });
           } else if (payload.eventType === "UPDATE") {
             const diaries = get().diaries;
+            const existingDiary = get().diary;
             const newDiary = payload.new as RealTimeDiaryType;
 
             const updatedDiaries = diaries.map((diary) => {
@@ -238,6 +239,22 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
 
             set({
               diaries: updatedDiaries,
+            });
+
+            const updatedDiary = {
+              id: existingDiary?.id,
+              title: newDiary.title,
+              date: existingDiary?.date,
+              content: newDiary.content,
+              like: newDiary.like,
+              laugh: newDiary.laugh,
+              cry: newDiary.cry,
+              comment: existingDiary?.comment,
+              adminId: existingDiary?.adminId,
+            };
+
+            set({
+              diary: updatedDiary,
             });
           }
         }

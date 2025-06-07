@@ -21,6 +21,7 @@ function Diary() {
   const [adminId, setAdminId] = useState(null);
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [onEdit, setOnEdit] = useState<boolean>(false);
+  const connectDiary = useDiariesStore((state) => state.connectDiary);
 
   useEffect(() => {
     setIsMounted(true);
@@ -37,6 +38,10 @@ function Diary() {
 
     fetchSupabase();
     fetchDiary(params.id);
+  }, []);
+
+  useEffect(() => {
+    connectDiary();
   }, []);
 
   const handleClose = () => {
