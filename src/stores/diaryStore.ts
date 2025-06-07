@@ -44,14 +44,6 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
   diary: null,
   fetchDiaries: async () => {
     try {
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries`
-      // );
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
-      // const data = await response.json();
-
       const { data, error } = await supabase.from("Diary").select("*");
       if (error) console.log(error.message);
 
@@ -74,14 +66,6 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
   },
   fetchDiary: async (id) => {
     try {
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`
-      // );
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
-      // const data = await response.json();
-
       const { data, error } = await supabase
         .from("Diary")
         .select()
@@ -108,19 +92,6 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
   },
   postDiary: async (dateTime, title, content, adminId) => {
     try {
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries`,
-      //   {
-      //     method: "POST",
-      //     body: JSON.stringify({ dateTime, title, content, adminId }),
-      //   }
-      // );
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
-      // const data = await response.json();
-      // return data;
-
       const { error } = await supabase
         .from("Diary")
         .insert([
@@ -142,18 +113,6 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
   },
   deleteDiary: async (id) => {
     try {
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`,
-      //   {
-      //     method: "DELETE",
-      //   }
-      // );
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
-      // const data = await response.json();
-      // return data;
-
       const { error } = await supabase.from("Diary").delete().eq("id", id);
       if (error) console.log(error.message);
     } catch (error) {
@@ -162,19 +121,6 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
   },
   editDiary: async (id, title, content) => {
     try {
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`,
-      //   {
-      //     method: "PUT",
-      //     body: JSON.stringify({ title, content }),
-      //   }
-      // );
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
-      // const data = await response.json();
-      // return data;
-
       const { error } = await supabase
         .from("Diary")
         .update({ title, content })
@@ -187,18 +133,6 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
   },
   incrementReaction: async (id, type) => {
     try {
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${id}`,
-      //   {
-      //     method: "PATCH",
-      //     body: JSON.stringify({ type }),
-      //   }
-      // );
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
-      // const data = await response.json();
-      // return data;
       if (type === "like") {
         const { error } = await supabase.rpc("increment", {
           x: 1,
@@ -239,8 +173,6 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
           table: "Diary",
         },
         (payload) => {
-          console.log(payload);
-
           if (payload.eventType === "INSERT") {
             const diaries = get().diaries;
             const newDiary = payload.new as RealTimeDiaryType;
@@ -304,8 +236,6 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
               }
             });
 
-            console.log(updatedDiaries);
-
             set({
               diaries: updatedDiaries,
             });
@@ -313,7 +243,5 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
         }
       )
       .subscribe();
-
-    console.log(channel);
   },
 }));
