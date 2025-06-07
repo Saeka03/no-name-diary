@@ -10,9 +10,10 @@ import CardSkeleton from "./CardSkeleton";
 
 type CommentDisplayProps = {
   diaryId: number;
+  adminId: string;
 };
 
-function CommentDisplay({ diaryId }: CommentDisplayProps) {
+function CommentDisplay({ diaryId, adminId }: CommentDisplayProps) {
   const [content, setContent] = useState<string>("");
   const comments = useCommentsStore((state) => state.comments);
   const fetchComments = useCommentsStore((state) => state.fetchComments);
@@ -75,12 +76,16 @@ function CommentDisplay({ diaryId }: CommentDisplayProps) {
                     </div>
                     <div className={styles.commentsContents}>
                       <p>{comment.content}</p>
-                      <button
-                        className={styles.bin}
-                        onClick={() => commentDeleteHandler(comment.id)}
-                      >
-                        <IoTrashOutline />
-                      </button>
+                      {!adminId ? (
+                        <></>
+                      ) : (
+                        <button
+                          className={styles.bin}
+                          onClick={() => commentDeleteHandler(comment.id)}
+                        >
+                          <IoTrashOutline />
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

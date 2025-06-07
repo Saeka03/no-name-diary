@@ -56,7 +56,9 @@ function Diary() {
           <div className={styles.header}>
             <p>{diary && formatDate(new Date(diary.date))}</p>
             <div className={styles.buttons}>
-              {onEdit ? (
+              {!adminId ? (
+                <></>
+              ) : onEdit ? (
                 <Button
                   text={"No Edit"}
                   className={"cancel"}
@@ -69,7 +71,6 @@ function Diary() {
                   onClick={() => setOnEdit(!onEdit)}
                 />
               )}
-
               <button className={styles.closeButton} onClick={handleClose}>
                 ×
               </button>
@@ -77,7 +78,7 @@ function Diary() {
           </div>
           <div className={styles.line}></div>
           <DiaryDisplay diary={diary} adminId={adminId} onEdit={onEdit} />
-          <CommentDisplay diaryId={Number(params.id)} />
+          <CommentDisplay diaryId={Number(params.id)} adminId={adminId} />
         </div>
       </div>
     </div>

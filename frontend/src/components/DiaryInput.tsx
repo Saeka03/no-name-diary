@@ -34,7 +34,6 @@ function DiaryInput({ date, handleClose, adminId }: DiaryInputProps) {
     try {
       await postDiary(date, title, diaryContent, adminId);
       router.back();
-      await fetchDiaries();
     } catch (error) {
       if (error instanceof Error) {
         alert(`${error.message}`);

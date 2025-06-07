@@ -54,7 +54,6 @@ function DiaryDisplay({ diary, adminId, onEdit }: DiaryDisplayProps) {
       router.back();
       clearDiary();
       clearComments();
-      await fetchDiaries();
     } catch (error) {
       if (error instanceof Error) {
         alert(`${error.message}`);
