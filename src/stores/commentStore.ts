@@ -17,14 +17,6 @@ export const useCommentsStore = create<CommentState>()((set) => ({
   comments: [],
   fetchComments: async (diaryId) => {
     try {
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${diaryId}/comments`
-      // );
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
-      // const data = await response.json();
-
       const { data, error } = await supabase
         .from("Comment")
         .select()
@@ -44,19 +36,6 @@ export const useCommentsStore = create<CommentState>()((set) => ({
   },
   postComment: async (dateTime, content, diaryId) => {
     try {
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${diaryId}/comments`,
-      //   {
-      //     method: "POST",
-      //     body: JSON.stringify({ dateTime, content, diaryId }),
-      //   }
-      // );
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
-      // const data = await response.json();
-      // return data;
-
       const { error } = await supabase
         .from("Comment")
         .insert([{ dateTime, content, diaryId }])
@@ -68,18 +47,6 @@ export const useCommentsStore = create<CommentState>()((set) => ({
   },
   deleteComment: async (commentId) => {
     try {
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_FRONTEND_ORIGIN}/api/diaries/${diaryId}/comments/${commentId}`,
-      //   {
-      //     method: "DELETE",
-      //   }
-      // );
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
-      // const data = await response.json();
-      // return data;
-
       const { error } = await supabase
         .from("Comment")
         .delete()
