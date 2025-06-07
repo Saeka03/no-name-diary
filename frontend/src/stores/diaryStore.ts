@@ -36,9 +36,10 @@ interface DiariesState {
   editDiary: (id, title, content) => Promise<void>;
   incrementReaction: (id, type) => Promise<void>;
   clearDiary: () => void;
+  connectDiary: () => void;
 }
 
-export const useDiariesStore = create<DiariesState>()((set) => ({
+export const useDiariesStore = create<DiariesState>()((set, get) => ({
   diaries: [],
   diary: null,
   fetchDiaries: async () => {
@@ -64,7 +65,7 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
           laugh: diary.laugh,
           cry: diary.cry,
           comment: diary.comment,
-          adminId: diary.adminId,
+          adminId: diary.admin_id,
         })),
       });
     } catch (error) {
@@ -98,7 +99,7 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
           laugh: data.laugh,
           cry: data.cry,
           comment: data.comment,
-          adminId: data.adminId,
+          adminId: data.admin_id,
         },
       });
     } catch (error) {
@@ -123,7 +124,15 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
       const { error } = await supabase
         .from("Diary")
         .insert([
-          { dateTime, title, content, adminId, like: 0, laugh: 0, cry: 0 },
+          {
+            dateTime,
+            title,
+            content,
+            admin_id: adminId,
+            like: 0,
+            laugh: 0,
+            cry: 0,
+          },
         ])
         .select();
       if (error) console.log(error.message);
@@ -218,5 +227,93 @@ export const useDiariesStore = create<DiariesState>()((set) => ({
   },
   clearDiary: () => {
     set({ diary: null });
+  },
+  connectDiary: () => {
+    const channel = supabase
+      .channel("table-db-changes")
+      .on<RealTimeDiaryType>(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "Diary",
+        },
+        (payload) => {
+          console.log(payload);
+
+          if (payload.eventType === "INSERT") {
+            const diaries = get().diaries;
+            const newDiary = payload.new as RealTimeDiaryType;
+
+            set({
+              diaries: [
+                ...diaries,
+                {
+                  id: newDiary?.id.toString(),
+                  title: newDiary.title,
+                  date: newDiary.dateTime,
+                  content: newDiary.content,
+                  like: newDiary.like,
+                  laugh: newDiary.laugh,
+                  cry: newDiary.cry,
+                  comment: newDiary.comment,
+                  adminId: newDiary.adminId,
+                },
+              ],
+            });
+          } else if (payload.eventType === "DELETE") {
+            const diaries = get().diaries;
+            const deletedDiary = payload.old.id;
+
+            const filteredDiaries = diaries.filter((diary) => {
+              return diary.id !== deletedDiary.toString();
+            });
+
+            set({
+              diaries: filteredDiaries.map((diary) => ({
+                id: diary.id.toString(),
+                title: diary.title,
+                date: diary.date,
+                content: diary.content,
+                like: diary.like,
+                laugh: diary.laugh,
+                cry: diary.cry,
+                comment: diary.comment,
+                adminId: diary.adminId,
+              })),
+            });
+          } else if (payload.eventType === "UPDATE") {
+            const diaries = get().diaries;
+            const newDiary = payload.new as RealTimeDiaryType;
+
+            const updatedDiaries = diaries.map((diary) => {
+              if (diary.id === newDiary.id.toString()) {
+                return {
+                  id: diary.id.toString(),
+                  title: newDiary.title,
+                  date: diary.date,
+                  content: newDiary.content,
+                  like: newDiary.like,
+                  laugh: newDiary.laugh,
+                  cry: newDiary.cry,
+                  comment: diary.comment,
+                  adminId: diary.adminId,
+                };
+              } else {
+                return diary;
+              }
+            });
+
+            console.log(updatedDiaries);
+
+            set({
+              diaries: updatedDiaries,
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    console.log(channel);
   },
 }));

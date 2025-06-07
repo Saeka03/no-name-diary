@@ -15,3 +15,15 @@ type CommentType = {
   date: Date;
   content: string;
 };
+
+type RealTimeDiaryType = {
+  id: string;
+  dateTime: Date;
+  title: string;
+  content: string;
+  like: number;
+  laugh: number;
+  cry: number;
+  comment: CommentType[];
+  adminId: string;
+};
