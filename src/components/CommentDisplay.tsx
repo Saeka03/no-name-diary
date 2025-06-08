@@ -45,7 +45,7 @@ function CommentDisplay({ diaryId, adminId }: CommentDisplayProps) {
     }
   };
 
-  const commentDeleteHandler = async (commentId: number) => {
+  const commentDeleteHandler = async (commentId: string) => {
     try {
       await deleteComment(commentId);
       fetchComments(diaryId);
