@@ -13,6 +13,13 @@ No Name Diary is a diary web application. All visitors can do is view posts, lea
 - Anonymous Comments: Leave comments on diary entries (users can’t delete their own comments).
 - Reactions: React to diary posts.
 
+## Link
+https://no-name-diary.vercel.app/
+
+## Screenshot
+![image](https://github.com/user-attachments/assets/af7f0040-f501-4899-b2bf-e2f4e625da95)
+![image](https://github.com/user-attachments/assets/1f97a292-678d-4d09-95e1-8603fec90b3b)
+
 ## Tech Stack
 - Typescript
 - Next.js
