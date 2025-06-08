@@ -61,20 +61,22 @@ function Diary() {
           <div className={styles.header}>
             <p>{diary && formatDate(new Date(diary.date))}</p>
             <div className={styles.buttons}>
-              {!adminId ? (
-                <></>
-              ) : onEdit ? (
-                <Button
-                  text={"No Edit"}
-                  className={"cancel"}
-                  onClick={() => setOnEdit(!onEdit)}
-                />
+              {adminId === diary?.adminId ? (
+                onEdit ? (
+                  <Button
+                    text={"No Edit"}
+                    className={"cancel"}
+                    onClick={() => setOnEdit(!onEdit)}
+                  />
+                ) : (
+                  <Button
+                    text={"Edit"}
+                    className={"action"}
+                    onClick={() => setOnEdit(!onEdit)}
+                  />
+                )
               ) : (
-                <Button
-                  text={"Edit"}
-                  className={"action"}
-                  onClick={() => setOnEdit(!onEdit)}
-                />
+                <></>
               )}
               <button className={styles.closeButton} onClick={handleClose}>
                 ×
