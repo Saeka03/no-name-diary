@@ -9,7 +9,7 @@ interface CommentState {
     content: string,
     diaryId: number
   ) => Promise<void>;
-  deleteComment: (commentId: number) => Promise<void>;
+  deleteComment: (commentId: string) => Promise<void>;
   clearComments: () => void;
   connectComment: () => void;
 }
