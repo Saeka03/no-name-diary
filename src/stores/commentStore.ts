@@ -11,9 +11,10 @@ interface CommentState {
   ) => Promise<void>;
   deleteComment: (commentId: number) => Promise<void>;
   clearComments: () => void;
+  connectComment: () => void;
 }
 
-export const useCommentsStore = create<CommentState>()((set) => ({
+export const useCommentsStore = create<CommentState>()((set, get) => ({
   comments: [],
   fetchComments: async (diaryId) => {
     try {
@@ -58,5 +59,50 @@ export const useCommentsStore = create<CommentState>()((set) => ({
   },
   clearComments: () => {
     set({ comments: null });
+  },
+  connectComment: () => {
+    const channel = supabase
+      .channel("comment-db-changes")
+      .on<RealTimeCommentType>(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "Comment",
+        },
+        (payload) => {
+          if (payload.eventType === "INSERT") {
+            const comments = get().comments;
+            const newComment = payload.new as RealTimeCommentType;
+
+            set({
+              comments: [
+                ...comments,
+                {
+                  id: newComment?.id.toString(),
+                  date: newComment.dateTime,
+                  content: newComment.content,
+                },
+              ],
+            });
+          } else if (payload.eventType === "DELETE") {
+            const comments = get().comments;
+            const deletedComment = payload.old.id;
+
+            const filteredDiaries = comments.filter((comment) => {
+              return comment.id !== deletedComment.toString();
+            });
+
+            set({
+              comments: filteredDiaries.map((comment) => ({
+                id: comment.id.toString(),
+                date: comment.date,
+                content: comment.content,
+              })),
+            });
+          }
+        }
+      )
+      .subscribe();
   },
 }));
