@@ -11,7 +11,7 @@ type DiaryType = {
 };
 
 type CommentType = {
-  id: number;
+  id: string;
   date: Date;
   content: string;
 };
@@ -26,4 +26,10 @@ type RealTimeDiaryType = {
   cry: number;
   comment: CommentType[];
   adminId: string;
+};
+
+type RealTimeCommentType = {
+  id: string;
+  dateTime: Date;
+  content: string;
 };

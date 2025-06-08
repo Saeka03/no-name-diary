@@ -7,11 +7,13 @@ import Calendar from "../components/Calendar";
 import Modal from "../components/Modal";
 import { createClient } from "../utils/supabase/client";
 import { useDiariesStore } from "../stores/diaryStore";
+import { useCommentsStore } from "../stores/commentStore";
 
 function Page() {
   const [isUser, setIsUser] = useState<boolean>(false);
   const [isMounted, setIsMounted] = useState(false);
   const connectDiary = useDiariesStore((state) => state.connectDiary);
+  const connectComment = useCommentsStore((state) => state.connectComment);
 
   useEffect(() => {
     setIsMounted(true);
@@ -30,6 +32,7 @@ function Page() {
 
   useEffect(() => {
     connectDiary();
+    connectComment();
   }, []);
 
   if (!isMounted) {

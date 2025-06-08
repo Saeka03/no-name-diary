@@ -164,7 +164,7 @@ export const useDiariesStore = create<DiariesState>()((set, get) => ({
   },
   connectDiary: () => {
     const channel = supabase
-      .channel("table-db-changes")
+      .channel("diary-db-changes")
       .on<RealTimeDiaryType>(
         "postgres_changes",
         {
